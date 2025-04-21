@@ -1,0 +1,28 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "coverage",
+            "displayName": "Debug + coverage (GCC/Clang)",
+            "generator": "Ninja", // or "MinGW Makefiles" on Windows
+            "binaryDir": "${sourceDir}/out/build/coverage",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_CXX_FLAGS": "--coverage -O0 -g",
+                "CMAKE_C_FLAGS": "--coverage -O0 -g"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "coverage",
+            "configurePreset": "coverage"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "coverage",
+            "configurePreset": "coverage"
+        }
+    ]
+}

@@ -1,0 +1,2124 @@
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\Admin.cpp ---   & type "C:\Users\Francisco\Documents\New folder\src\Admin.cpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\Admin.cpp --- 
+#include "Admin.hpp"
+
+// Default constructor initializes an Admin with empty id and name.
+Admin::Admin() : User() {
+    // Additional initializations for Admin-specific attributes can go here.
+}
+
+// Parameterized constructor initializes an Admin with the provided id and name.
+Admin::Admin(const std::string &id, const std::string &name) : User(id, name) {
+    // Additional initialization as needed.
+}
+
+// Virtual destructor ensures proper cleanup for derived classes.
+Admin::~Admin() {
+    // Cleanup code if needed.
+}
+
+// Override displayUserInfo to provide Admin-specific details.
+void Admin::displayUserInfo() const {
+    std::cout << "Admin User Information:" << std::endl;
+    std::cout << "User ID: " << getUserID() << std::endl;
+    std::cout << "Name: " << getName() << std::endl;
+    // You can display more admin-specific details here if needed.
+}
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\AuthManager.cpp ---   & type "C:\Users\Francisco\Documents\New folder\src\AuthManager.cpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\AuthManager.cpp --- 
+#include "AuthManager.hpp"
+#include "Admin.hpp"
+#include "Student.hpp"
+#include <iostream>
+#include <memory>
+
+AuthManager::AuthManager(UserManager& um) : userManager(um) {}
+
+// Define loginUser here – this is the only definition.
+User* AuthManager::loginUser(const std::string& userId) {
+    User* user = userManager.findUserById(userId);
+    if (!user) {
+        std::cout << "Login failed. User with ID " << userId << " does not exist." << std::endl;
+    }
+    else {
+        std::cout << "Login successful! Welcome, " << user->getName() << "." << std::endl;
+    }
+    return user;
+}
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\GroupManagementMenu.cpp ---   & type "C:\Users\Francisco\Documents\New folder\src\GroupManagementMenu.cpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\GroupManagementMenu.cpp --- 
+#include "GroupManagementMenu.hpp"
+#include <iostream>
+#include <string>
+
+void groupManagementMenu(GroupManager& groupManager) {
+    int choice = 0;
+    do {
+        std::cout << "\n--- Group Management Menu ---" << std::endl;
+        std::cout << "1. Add Group" << std::endl;
+        std::cout << "2. Update Group" << std::endl;
+        std::cout << "3. Delete Group" << std::endl;
+        std::cout << "4. List Groups" << std::endl;
+        std::cout << "0. Return to Admin Menu" << std::endl;
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
+        std::cin.ignore();
+
+        switch (choice) {
+        case 1: {
+            std::string id, name;
+            std::cout << "\nEnter group ID: ";
+            std::getline(std::cin, id);
+            std::cout << "Enter group name: ";
+            std::getline(std::cin, name);
+            try {
+                groupManager.addGroup(Group(id, name));
+                std::cout << "Group added successfully." << std::endl;
+            }
+            catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << std::endl;
+            }
+            break;
+        }
+        case 2: {
+            std::string id, name;
+            std::cout << "\nEnter group ID to update: ";
+            std::getline(std::cin, id);
+            std::cout << "Enter new group name: ";
+            std::getline(std::cin, name);
+            try {
+                groupManager.updateGroup(id, Group(id, name));
+                std::cout << "Group updated successfully." << std::endl;
+            }
+            catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << std::endl;
+            }
+            break;
+        }
+        case 3: {
+            std::string id;
+            std::cout << "\nEnter group ID to delete: ";
+            std::getline(std::cin, id);
+            try {
+                groupManager.deleteGroup(id);
+                std::cout << "Group deleted successfully." << std::endl;
+            }
+            catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << std::endl;
+            }
+            break;
+        }
+        case 4: {
+            std::cout << "\nListing all groups:" << std::endl;
+            groupManager.listGroups();
+            break;
+        }
+        case 0:
+            std::cout << "Returning to Admin Menu..." << std::endl;
+            break;
+        default:
+            std::cout << "Invalid choice. Please try again." << std::endl;
+        }
+    } while (choice != 0);
+}
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\GroupManager.cpp ---   & type "C:\Users\Francisco\Documents\New folder\src\GroupManager.cpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\GroupManager.cpp --- 
+#include "GroupManager.hpp"
+
+GroupManager::GroupManager() : groups() {}
+
+void GroupManager::addGroup(const Group& group) {
+    auto it = std::find_if(groups.begin(), groups.end(),
+        [&group](const Group& g) { return g.getGroupId() == group.getGroupId(); });
+    if (it != groups.end()) {
+        throw std::runtime_error("Group with ID " + group.getGroupId() + " already exists.");
+    }
+    groups.push_back(group);
+}
+
+void GroupManager::updateGroup(const std::string& groupId, const Group& updatedGroup) {
+    auto it = std::find_if(groups.begin(), groups.end(),
+        [&groupId](const Group& g) { return g.getGroupId() == groupId; });
+    if (it != groups.end()) {
+        *it = updatedGroup;
+    }
+    else {
+        throw std::runtime_error("Group with ID " + groupId + " not found.");
+    }
+}
+
+void GroupManager::deleteGroup(const std::string& groupId) {
+    auto it = std::remove_if(groups.begin(), groups.end(),
+        [&groupId](const Group& g) { return g.getGroupId() == groupId; });
+    if (it != groups.end()) {
+        groups.erase(it, groups.end());
+    }
+    else {
+        throw std::runtime_error("Group with ID " + groupId + " not found.");
+    }
+}
+
+void GroupManager::listGroups() const {
+    if (groups.empty()) {
+        std::cout << "No groups available." << std::endl;
+        return;
+    }
+    for (const auto& g : groups) {
+        g.displayGroup();
+        std::cout << "-----------------" << std::endl;
+    }
+}
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\main.cpp ---   & type "C:\Users\Francisco\Documents\New folder\src\main.cpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\main.cpp --- 
+#include <iostream>
+#include <memory>
+
+// Include all manager classes and user/entity classes.
+#include "AuthManager.hpp"          // Handles login; in separate auth_manager.hpp/.cpp files.
+#include "ModuleManager.hpp"        // For module CRUD.
+#include "UserManager.hpp"          // For managing Admin and Student users.
+#include "GroupManager.hpp"         // For managing student groups.
+#include "SessionTypeManager.hpp"   // For managing session types.
+#include "RoomManager.hpp"          // For managing rooms.
+#include "TimetableManager.hpp"     // For managing timetables.
+#include "Admin.hpp"                // Derived from User.
+#include "Student.hpp"              // Derived from User.
+#include "Group.hpp"                // Group entity.
+#include "SessionType.hpp"          // SessionType entity.
+#include "Room.hpp"                 // Room entity.
+#include "Timetable.hpp"            // Timetable entity.
+#include "ModuleManagementMenu.hpp"
+#include "UserManagementMenu.hpp"
+#include "GroupManagementMenu.hpp"
+#include "SessionTypeManagementMenu.hpp"
+#include "RoomManagementMenu.hpp"
+#include "TimetableManagementMenu.hpp"
+
+// Forward declarations for menus and login.
+void adminExtendedMenu(
+    ModuleManager& moduleManager,
+    UserManager& userManager,
+    GroupManager& groupManager,
+    SessionTypeManager& sessionTypeManager,
+    RoomManager& roomManager,
+    TimetableManager& timetableManager
+);
+void studentMenu(ModuleManager& moduleManager, UserManager& userManager);
+
+// This function populates default data into all manager instances.
+void populateDefaultData(
+    UserManager& userManager,
+    ModuleManager& moduleManager,
+    GroupManager& groupManager,
+    SessionTypeManager& sessionTypeManager,
+    RoomManager& roomManager,
+    TimetableManager& timetableManager
+) {
+    try {
+        // Default users
+        userManager.addUser(std::make_unique<Admin>("A001", "Admin One"));
+        userManager.addUser(std::make_unique<Student>("S001", "Student One"));
+
+        // Default modules
+        moduleManager.addModule(Module("COMP101", "Intro to Programming", "Basic C++ programming concepts."));
+        moduleManager.addModule(Module("COMP102", "Data Structures", "Introduction to data structures such as arrays, lists, stacks, and queues."));
+
+        // Default groups
+        groupManager.addGroup(Group("G001", "Group A"));
+        groupManager.addGroup(Group("G002", "Group B"));
+
+        // Default session types (Lecture, Lab, etc.)
+        sessionTypeManager.addSessionType(SessionType("ST01", "Lecture"));
+        sessionTypeManager.addSessionType(SessionType("ST02", "Lab"));
+
+        // Default rooms
+        roomManager.addRoom(Room("R001", "John Clare Lecture Theatre 006"));
+        roomManager.addRoom(Room("R002", "MAE 202"));
+
+        // Default timetable for week 1
+        Timetable week1(1);
+        week1.addSession("COMP101 Lecture Monday 600 660 R001");
+        week1.addSession("COMP102 Lecture Monday 650 710 R001");
+        timetableManager.createTimetable(1, week1);
+
+        std::cout << "Default data populated successfully." << std::endl;
+    }
+    catch (const std::exception& e) {
+        std::cout << "Error populating default data: " << e.what() << std::endl;
+    }
+}
+
+int main() {
+    // Instantiate manager objects once.
+    ModuleManager moduleManager;
+    UserManager userManager;
+    GroupManager groupManager;
+    SessionTypeManager sessionTypeManager;
+    RoomManager roomManager;
+    TimetableManager timetableManager;
+
+    // Populate default data into the system.
+    populateDefaultData(userManager, moduleManager, groupManager,
+        sessionTypeManager, roomManager, timetableManager);
+
+    AuthManager authManager(userManager);
+
+    // Main menu loop for login.
+    while (true) {
+        std::cout << "\n=== NTU Timetabling System ===" << std::endl;
+        std::cout << "1. Login" << std::endl;
+        std::cout << "0. Exit" << std::endl;
+        std::cout << "Enter your choice: ";
+
+        int mainChoice;
+        std::cin >> mainChoice;
+        std::cin.ignore();
+
+        if (mainChoice == 0) {
+            std::cout << "Exiting system. Goodbye!" << std::endl;
+            break;
+        }
+        else if (mainChoice == 1) {
+            std::cout << "\n=== Login ===\nEnter User ID: ";
+            // Use AuthManager's login function; for simplicity here, using a simple loginUser.
+            std::string userId;
+            std::cin >> userId;
+            std::cin.ignore();
+            User* currentUser = authManager.loginUser(userId);
+            if (currentUser) {
+                // Direct user to the appropriate menu based on their role.
+                if (dynamic_cast<Admin*>(currentUser) != nullptr) {
+                    adminExtendedMenu(moduleManager, userManager, groupManager,
+                        sessionTypeManager, roomManager, timetableManager);
+                }
+                else if (dynamic_cast<Student*>(currentUser) != nullptr) {
+                    studentMenu(moduleManager, userManager);
+                }
+            }
+        }
+        else {
+            std::cout << "Invalid choice. Please try again." << std::endl;
+        }
+    }
+
+    return 0;
+}
+
+// A simple login function that searches for a user by user ID.
+User* loginUser(UserManager& userManager) {
+    std::string userId;
+    std::cin >> userId;
+    std::cin.ignore();
+    User* user = userManager.findUserById(userId);
+    if (!user) {
+        std::cout << "Login failed. User with ID " << userId << " does not exist." << std::endl;
+    }
+    else {
+        std::cout << "Login successful! Welcome, " << user->getName() << "." << std::endl;
+    }
+    return user;
+}
+
+// A basic student menu for demonstration.
+void studentMenu(ModuleManager& moduleManager, UserManager& userManager) {
+    int choice = 0;
+    do {
+        std::cout << "\n=== Student Menu ===" << std::endl;
+        std::cout << "1. View Modules" << std::endl;
+        // Future options for timetable search and CSV export can be added.
+        std::cout << "0. Return to Main Menu" << std::endl;
+        std::cout << "Enter choice: ";
+        std::cin >> choice;
+        std::cin.ignore();
+        switch (choice) {
+        case 1:
+            moduleManager.listModules();
+            break;
+        case 0:
+            std::cout << "Returning to Main Menu..." << std::endl;
+            break;
+        default:
+            std::cout << "Invalid choice. Try again." << std::endl;
+        }
+    } while (choice != 0);
+}
+
+// Extended admin menu that includes options for all Phase D features.
+void adminExtendedMenu(
+    ModuleManager& moduleManager,
+    UserManager& userManager,
+    GroupManager& groupManager,
+    SessionTypeManager& sessionTypeManager,
+    RoomManager& roomManager,
+    TimetableManager& timetableManager
+) {
+    int choice = 0;
+    do {
+        std::cout << "\n=== Admin Menu (Extended) ===" << std::endl;
+        std::cout << "1. Module Management" << std::endl;
+        std::cout << "2. User Management" << std::endl;
+        std::cout << "3. Group Management" << std::endl;
+        std::cout << "4. Session Type Management" << std::endl;
+        std::cout << "5. Room Management" << std::endl;
+        std::cout << "6. Timetable Management" << std::endl;
+        std::cout << "0. Return to Main Menu" << std::endl;
+        std::cout << "Enter choice: ";
+        std::cin >> choice;
+        std::cin.ignore();
+
+        switch (choice) {
+        case 1:
+            std::cout << "\n--- Module Management ---" << std::endl;
+            moduleManagementMenu(moduleManager);
+            break;
+        case 2:
+            std::cout << "\n--- User Management ---" << std::endl;
+            userManagementMenu(userManager);
+            break;
+        case 3:
+            std::cout << "\n--- Group Management ---" << std::endl;
+            groupManagementMenu(groupManager);
+            break;
+        case 4:
+            std::cout << "\n--- Session Type Management ---" << std::endl;
+            sessionTypeManagementMenu(sessionTypeManager);
+            break;
+        case 5:
+            std::cout << "\n--- Room Management ---" << std::endl;
+            roomManagementMenu(roomManager);
+            break;
+        case 6: {
+            std::cout << "\n--- Timetable Management ---" << std::endl;
+            timetableManagementMenu(timetableManager);
+            break;
+        }
+        case 0:
+            std::cout << "Returning to Main Menu..." << std::endl;
+            break;
+        default:
+            std::cout << "Invalid choice. Try again." << std::endl;
+            break;
+        }
+    } while (choice != 0);
+}
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\Module.cpp ---   & type "C:\Users\Francisco\Documents\New folder\src\Module.cpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\Module.cpp --- 
+#include "Module.hpp"
+
+// Default constructor initializes an empty module.
+Module::Module() : moduleCode(""), moduleName(""), description("") {
+}
+
+// Parameterized constructor to initialize a module with given values.
+Module::Module(const std::string &code, const std::string &name, const std::string &desc)
+    : moduleCode(code), moduleName(name), description(desc) {
+}
+
+// Copy constructor creates a new module as a copy of an existing one.
+Module::Module(const Module &other)
+    : moduleCode(other.moduleCode), moduleName(other.moduleName), description(other.description) {
+}
+
+// Destructor; no dynamic memory, so no special cleanup is required.
+Module::~Module() {}
+
+// Get the module's unique code.
+std::string Module::getModuleCode() const {
+    return moduleCode;
+}
+
+// Set or update the module's code.
+void Module::setModuleCode(const std::string &code) {
+    moduleCode = code;
+}
+
+// Get the module's name.
+std::string Module::getModuleName() const {
+    return moduleName;
+}
+
+// Set or update the module's name.
+void Module::setModuleName(const std::string &name) {
+    moduleName = name;
+}
+
+// Get the description of the module.
+std::string Module::getDescription() const {
+    return description;
+}
+
+// Set or update the module's description.
+void Module::setDescription(const std::string &desc) {
+    description = desc;
+}
+
+// Display the module information on the console.
+void Module::displayModule() const {
+    std::cout << "Module Code: " << moduleCode << std::endl;
+    std::cout << "Module Name: " << moduleName << std::endl;
+    std::cout << "Description: " << description << std::endl;
+}
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\ModuleManagementMenu.cpp ---   & type "C:\Users\Francisco\Documents\New folder\src\ModuleManagementMenu.cpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\ModuleManagementMenu.cpp --- 
+// ModuleManagementMenu.cpp
+#include "ModuleManagementMenu.hpp"
+
+void moduleManagementMenu(ModuleManager& moduleManager) {
+    int choice = 0;
+    do {
+        std::cout << "\n--- Module Management Menu ---" << std::endl;
+        std::cout << "1. Add Module" << std::endl;
+        std::cout << "2. Update Module" << std::endl;
+        std::cout << "3. Delete Module" << std::endl;
+        std::cout << "4. Search Module" << std::endl;
+        std::cout << "5. List Modules" << std::endl;
+        std::cout << "0. Return to Admin Menu" << std::endl;
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
+        std::cin.ignore(); // Clear newline
+
+        switch (choice) {
+        case 1: {
+            std::string code, name, desc;
+            std::cout << "\nEnter module code: ";
+            std::getline(std::cin, code);
+            std::cout << "Enter module name: ";
+            std::getline(std::cin, name);
+            std::cout << "Enter module description: ";
+            std::getline(std::cin, desc);
+            try {
+                moduleManager.addModule(Module(code, name, desc));
+                std::cout << "Module added successfully." << std::endl;
+            }
+            catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << std::endl;
+            }
+            break;
+        }
+        case 2: {
+            std::string code, name, desc;
+            std::cout << "\nEnter module code to update: ";
+            std::getline(std::cin, code);
+            std::cout << "Enter new module name: ";
+            std::getline(std::cin, name);
+            std::cout << "Enter new module description: ";
+            std::getline(std::cin, desc);
+            try {
+                moduleManager.updateModule(code, Module(code, name, desc));
+                std::cout << "Module updated successfully." << std::endl;
+            }
+            catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << std::endl;
+            }
+            break;
+        }
+        case 3: {
+            std::string code;
+            std::cout << "\nEnter module code to delete: ";
+            std::getline(std::cin, code);
+            try {
+                moduleManager.deleteModule(code);
+                std::cout << "Module deleted successfully." << std::endl;
+            }
+            catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << std::endl;
+            }
+            break;
+        }
+        case 4: {
+            std::string code;
+            std::cout << "\nEnter module code to search: ";
+            std::getline(std::cin, code);
+            try {
+                Module mod = moduleManager.searchModule(code);
+                std::cout << "Module found:" << std::endl;
+                mod.displayModule();
+            }
+            catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << std::endl;
+            }
+            break;
+        }
+        case 5: {
+            std::cout << "\nListing all modules:" << std::endl;
+            moduleManager.listModules();
+            break;
+        }
+        case 0:
+            std::cout << "Returning to Admin Menu..." << std::endl;
+            break;
+        default:
+            std::cout << "Invalid option. Please try again." << std::endl;
+        }
+    } while (choice != 0);
+}
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\ModuleManager.cpp ---   & type "C:\Users\Francisco\Documents\New folder\src\ModuleManager.cpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\ModuleManager.cpp --- 
+#include "ModuleManager.hpp"
+
+ModuleManager::ModuleManager() : modules() {}
+
+// Adds a new module.
+void ModuleManager::addModule(const Module& module) {
+    auto it = std::find_if(modules.begin(), modules.end(),
+        [&module](const Module& m) { return m.getModuleCode() == module.getModuleCode(); });
+    if (it != modules.end()) {
+        throw std::runtime_error("Module with code " + module.getModuleCode() + " already exists.");
+    }
+    modules.push_back(module);
+}
+
+// Updates an existing module.
+void ModuleManager::updateModule(const std::string& moduleCode, const Module& updatedModule) {
+    auto it = std::find_if(modules.begin(), modules.end(),
+        [&moduleCode](const Module& m) { return m.getModuleCode() == moduleCode; });
+    if (it != modules.end()) {
+        *it = updatedModule;
+    }
+    else {
+        throw std::runtime_error("Module with code " + moduleCode + " not found.");
+    }
+}
+
+// Deletes a module.
+void ModuleManager::deleteModule(const std::string& moduleCode) {
+    auto it = std::remove_if(modules.begin(), modules.end(),
+        [&moduleCode](const Module& m) { return m.getModuleCode() == moduleCode; });
+    if (it != modules.end()) {
+        modules.erase(it, modules.end());
+    }
+    else {
+        throw std::runtime_error("Module with code " + moduleCode + " not found. Cannot delete.");
+    }
+}
+
+// Searches for a module.
+Module ModuleManager::searchModule(const std::string& moduleCode) const {
+    auto it = std::find_if(modules.begin(), modules.end(),
+        [&moduleCode](const Module& m) { return m.getModuleCode() == moduleCode; });
+    if (it != modules.end()) {
+        return *it;
+    }
+    else {
+        throw std::runtime_error("Module with code " + moduleCode + " not found.");
+    }
+}
+
+// Lists all modules.
+void ModuleManager::listModules() const {
+    if (modules.empty()) {
+        std::cout << "No modules available." << std::endl;
+        return;
+    }
+    for (const auto& m : modules) {
+        m.displayModule();
+        std::cout << "-----------------" << std::endl;
+    }
+}
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\RoomManagementMenu.cpp ---   & type "C:\Users\Francisco\Documents\New folder\src\RoomManagementMenu.cpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\RoomManagementMenu.cpp --- 
+#include "RoomManagementMenu.hpp"
+#include <iostream>
+#include <string>
+
+void roomManagementMenu(RoomManager& roomManager) {
+    int choice = 0;
+    do {
+        std::cout << "\n--- Room Management Menu ---" << std::endl;
+        std::cout << "1. Add Room" << std::endl;
+        std::cout << "2. Update Room" << std::endl;
+        std::cout << "3. Delete Room" << std::endl;
+        std::cout << "4. List Rooms" << std::endl;
+        std::cout << "0. Return to Admin Menu" << std::endl;
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
+        std::cin.ignore();
+
+        switch (choice) {
+        case 1: {
+            std::string id, name;
+            std::cout << "\nEnter room ID: ";
+            std::getline(std::cin, id);
+            std::cout << "Enter room name: ";
+            std::getline(std::cin, name);
+            try {
+                roomManager.addRoom(Room(id, name));
+                std::cout << "Room added successfully." << std::endl;
+            }
+            catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << std::endl;
+            }
+            break;
+        }
+        case 2: {
+            std::string id, name;
+            std::cout << "\nEnter room ID to update: ";
+            std::getline(std::cin, id);
+            std::cout << "Enter new room name: ";
+            std::getline(std::cin, name);
+            try {
+                roomManager.updateRoom(id, Room(id, name));
+                std::cout << "Room updated successfully." << std::endl;
+            }
+            catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << std::endl;
+            }
+            break;
+        }
+        case 3: {
+            std::string id;
+            std::cout << "\nEnter room ID to delete: ";
+            std::getline(std::cin, id);
+            try {
+                roomManager.deleteRoom(id);
+                std::cout << "Room deleted successfully." << std::endl;
+            }
+            catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << std::endl;
+            }
+            break;
+        }
+        case 4: {
+            std::cout << "\nListing all rooms:" << std::endl;
+            roomManager.listRooms();
+            break;
+        }
+        case 0:
+            std::cout << "Returning to Admin Menu..." << std::endl;
+            break;
+        default:
+            std::cout << "Invalid option. Please try again." << std::endl;
+        }
+    } while (choice != 0);
+}
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\RoomManager.cpp ---   & type "C:\Users\Francisco\Documents\New folder\src\RoomManager.cpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\RoomManager.cpp --- 
+#include "RoomManager.hpp"
+
+RoomManager::RoomManager() : rooms() {}
+
+void RoomManager::addRoom(const Room& room) {
+    auto it = std::find_if(rooms.begin(), rooms.end(),
+        [&room](const Room& r) { return r.getRoomId() == room.getRoomId(); });
+    if (it != rooms.end()) {
+        throw std::runtime_error("Room with ID " + room.getRoomId() + " already exists.");
+    }
+    rooms.push_back(room);
+}
+
+void RoomManager::updateRoom(const std::string& roomId, const Room& updatedRoom) {
+    auto it = std::find_if(rooms.begin(), rooms.end(),
+        [&roomId](const Room& r) { return r.getRoomId() == roomId; });
+    if (it != rooms.end()) {
+        *it = updatedRoom;
+    }
+    else {
+        throw std::runtime_error("Room with ID " + roomId + " not found.");
+    }
+}
+
+void RoomManager::deleteRoom(const std::string& roomId) {
+    auto it = std::remove_if(rooms.begin(), rooms.end(),
+        [&roomId](const Room& r) { return r.getRoomId() == roomId; });
+    if (it != rooms.end()) {
+        rooms.erase(it, rooms.end());
+    }
+    else {
+        throw std::runtime_error("Room with ID " + roomId + " not found.");
+    }
+}
+
+void RoomManager::listRooms() const {
+    if (rooms.empty()) {
+        std::cout << "No rooms available." << std::endl;
+        return;
+    }
+    for (const auto& r : rooms) {
+        r.displayRoom();
+        std::cout << "-----------------" << std::endl;
+    }
+}
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\SessionTypeManagementMenu.cpp ---   & type "C:\Users\Francisco\Documents\New folder\src\SessionTypeManagementMenu.cpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\SessionTypeManagementMenu.cpp --- 
+#include "SessionTypeManagementMenu.hpp"
+#include <iostream>
+#include <string>
+
+void sessionTypeManagementMenu(SessionTypeManager& sessionTypeManager) {
+    int choice = 0;
+    do {
+        std::cout << "\n--- Session Type Management Menu ---" << std::endl;
+        std::cout << "1. Add Session Type" << std::endl;
+        std::cout << "2. Update Session Type" << std::endl;
+        std::cout << "3. Delete Session Type" << std::endl;
+        std::cout << "4. List Session Types" << std::endl;
+        std::cout << "0. Return to Admin Menu" << std::endl;
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
+        std::cin.ignore();
+
+        switch (choice) {
+        case 1: {
+            std::string id, name;
+            std::cout << "\nEnter session type ID: ";
+            std::getline(std::cin, id);
+            std::cout << "Enter session type (e.g., Lecture, Lab): ";
+            std::getline(std::cin, name);
+            try {
+                sessionTypeManager.addSessionType(SessionType(id, name));
+                std::cout << "Session type added successfully." << std::endl;
+            }
+            catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << std::endl;
+            }
+            break;
+        }
+        case 2: {
+            std::string id, name;
+            std::cout << "\nEnter session type ID to update: ";
+            std::getline(std::cin, id);
+            std::cout << "Enter new session type: ";
+            std::getline(std::cin, name);
+            try {
+                sessionTypeManager.updateSessionType(id, SessionType(id, name));
+                std::cout << "Session type updated successfully." << std::endl;
+            }
+            catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << std::endl;
+            }
+            break;
+        }
+        case 3: {
+            std::string id;
+            std::cout << "\nEnter session type ID to delete: ";
+            std::getline(std::cin, id);
+            try {
+                sessionTypeManager.deleteSessionType(id);
+                std::cout << "Session type deleted successfully." << std::endl;
+            }
+            catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << std::endl;
+            }
+            break;
+        }
+        case 4: {
+            std::cout << "\nListing all session types:" << std::endl;
+            sessionTypeManager.listSessionTypes();
+            break;
+        }
+        case 0:
+            std::cout << "Returning to Admin Menu..." << std::endl;
+            break;
+        default:
+            std::cout << "Invalid choice. Please try again." << std::endl;
+        }
+    } while (choice != 0);
+}
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\SessionTypeManager.cpp ---   & type "C:\Users\Francisco\Documents\New folder\src\SessionTypeManager.cpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\SessionTypeManager.cpp --- 
+#include "SessionTypeManager.hpp"
+
+SessionTypeManager::SessionTypeManager() : sessionTypes() {}
+
+void SessionTypeManager::addSessionType(const SessionType& sessionType) {
+    auto it = std::find_if(sessionTypes.begin(), sessionTypes.end(),
+        [&sessionType](const SessionType& st) { return st.getTypeId() == sessionType.getTypeId(); });
+    if (it != sessionTypes.end()) {
+        throw std::runtime_error("Session type with ID " + sessionType.getTypeId() + " already exists.");
+    }
+    sessionTypes.push_back(sessionType);
+}
+
+void SessionTypeManager::updateSessionType(const std::string& typeId, const SessionType& updatedSessionType) {
+    auto it = std::find_if(sessionTypes.begin(), sessionTypes.end(),
+        [&typeId](const SessionType& st) { return st.getTypeId() == typeId; });
+    if (it != sessionTypes.end()) {
+        *it = updatedSessionType;
+    }
+    else {
+        throw std::runtime_error("Session type with ID " + typeId + " not found.");
+    }
+}
+
+void SessionTypeManager::deleteSessionType(const std::string& typeId) {
+    auto it = std::remove_if(sessionTypes.begin(), sessionTypes.end(),
+        [&typeId](const SessionType& st) { return st.getTypeId() == typeId; });
+    if (it != sessionTypes.end()) {
+        sessionTypes.erase(it, sessionTypes.end());
+    }
+    else {
+        throw std::runtime_error("Session type with ID " + typeId + " not found.");
+    }
+}
+
+void SessionTypeManager::listSessionTypes() const {
+    if (sessionTypes.empty()) {
+        std::cout << "No session types available." << std::endl;
+        return;
+    }
+    for (const auto& st : sessionTypes) {
+        st.displaySessionType();
+        std::cout << "-----------------" << std::endl;
+    }
+}
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\Student.cpp ---   & type "C:\Users\Francisco\Documents\New folder\src\Student.cpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\Student.cpp --- 
+#include "Student.hpp"
+
+// Default constructor simply calls the default constructor of User.
+Student::Student() : User() {
+    // Additional initialization can be added here if needed.
+}
+
+// Parameterized constructor calls the base class constructor to set id and name.
+Student::Student(const std::string& id, const std::string& name) : User(id, name) {
+    // Additional student-specific initialization can be done here.
+}
+
+// Destructor
+Student::~Student() {
+    // Any necessary cleanup (none needed here).
+}
+
+// Displays the student’s information.
+void Student::displayUserInfo() const {
+    std::cout << "Student User Information:" << std::endl;
+    std::cout << "User ID: " << getUserID() << std::endl;
+    std::cout << "Name: " << getName() << std::endl;
+}
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\Timetable.cpp ---   & type "C:\Users\Francisco\Documents\New folder\src\Timetable.cpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\Timetable.cpp --- 
+#include "Timetable.hpp"
+#include "TimeUtility.hpp"
+#include "Session.hpp"
+#include <iostream>
+#include <sstream>
+
+Timetable::Timetable() : weekNumber(0) {}
+
+Timetable::Timetable(int week) : weekNumber(week) {}
+
+int Timetable::getWeekNumber() const {
+    return weekNumber;
+}
+
+void Timetable::addSession(const std::string& sessionDetail) {
+    sessions.push_back(sessionDetail);
+}
+
+void Timetable::displayTimetable() const {
+    std::cout << "Timetable for week " << weekNumber << ":" << std::endl;
+    if (sessions.empty()) {
+        std::cout << "No sessions scheduled." << std::endl;
+    }
+    else {
+        for (const auto& sessionStr : sessions) {
+            // Use the parseSession helper to extract structured data.
+            Session s = parseSession(sessionStr);
+            // Reformat start and end times using the utility function.
+            std::string startFormatted = minutesToHHMM12(s.startTime);
+            std::string endFormatted = minutesToHHMM12(s.endTime);
+            std::cout << s.courseName << " " << s.sessionType
+                << " on " << s.day
+                << " from " << startFormatted
+                << " to " << endFormatted
+                << " in room " << s.roomId << std::endl;
+        }
+    }
+}
+
+const std::vector<std::string>& Timetable::getSessions() const {
+    return sessions;
+}
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\TimetableManagementMenu.cpp ---   & type "C:\Users\Francisco\Documents\New folder\src\TimetableManagementMenu.cpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\TimetableManagementMenu.cpp --- 
+#include "TimetableManagementMenu.hpp"
+#include <iostream>
+#include <string>
+
+void timetableManagementMenu(TimetableManager& timetableManager) {
+    int choice = 0;
+    do {
+        std::cout << "\n--- Timetable Management Menu ---" << std::endl;
+        std::cout << "1. Create Timetable" << std::endl;
+        std::cout << "2. Update Timetable" << std::endl;
+        std::cout << "3. List Timetable for a Week" << std::endl;
+        std::cout << "4. Search for Conflicts" << std::endl;
+        std::cout << "5. Search Timetable by Keyword" << std::endl;
+        std::cout << "6. Export Timetable to CSV" << std::endl;
+        std::cout << "7. Resolve Conflicts" << std::endl;
+        std::cout << "0. Return to Admin Menu" << std::endl;
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
+        std::cin.ignore();
+
+        switch (choice) {
+        case 1: {
+            int week;
+            std::cout << "\nEnter week number to create timetable: ";
+            std::cin >> week;
+            std::cin.ignore();
+            Timetable timetable(week);
+            // For simplicity, we prompt for one session; you could extend this as needed.
+            std::string session;
+            std::cout << "Enter session details: ";
+            std::getline(std::cin, session);
+            timetable.addSession(session);
+            try {
+                timetableManager.createTimetable(week, timetable);
+                std::cout << "Timetable created successfully." << std::endl;
+            }
+            catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << std::endl;
+            }
+            break;
+        }
+        case 2: {
+            int week;
+            std::cout << "\nEnter week number to update timetable: ";
+            std::cin >> week;
+            std::cin.ignore();
+            Timetable timetable(week);
+            std::string session;
+            std::cout << "Enter new session details: ";
+            std::getline(std::cin, session);
+            timetable.addSession(session);
+            try {
+                timetableManager.updateTimetable(week, timetable);
+                std::cout << "Timetable updated successfully." << std::endl;
+            }
+            catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << std::endl;
+            }
+            break;
+        }
+        case 3: {
+            int week;
+            std::cout << "\nEnter week number to list timetable: ";
+            std::cin >> week;
+            std::cin.ignore();
+            timetableManager.listTimetable(week);
+            break;
+        }
+        case 4: {
+            std::cout << "\nSearching for timetable conflicts..." << std::endl;
+            auto conflicts = timetableManager.searchConflicts();
+            if (conflicts.empty()) {
+                std::cout << "No conflicts detected." << std::endl;
+            }
+            else {
+                for (const auto& conflict : conflicts) {
+                    std::cout << conflict << std::endl;
+                }
+            }
+            break;
+        }
+        case 5: {
+            std::cout << "\nEnter keyword to search for: ";
+            std::string keyword;
+            std::getline(std::cin, keyword);
+            auto results = timetableManager.searchTimetableByKeyword(keyword);
+            if (results.empty()) {
+                std::cout << "No sessions found matching the keyword." << std::endl;
+            }
+            else {
+                std::cout << "Sessions matching the keyword:" << std::endl;
+                for (const auto& r : results) {
+                    std::cout << r << std::endl;
+                }
+            }
+            break;
+        }
+        case 6: {
+            int week;
+            std::cout << "\nEnter week number to export timetable: ";
+            std::cin >> week;
+            std::cin.ignore();
+            std::string filename;
+            std::cout << "Enter filename (e.g., timetable.csv): ";
+            std::getline(std::cin, filename);
+            try {
+                timetableManager.exportTimetableToCSV(week, filename);
+                std::cout << "Timetable exported successfully to " << filename << std::endl;
+            }
+            catch (const std::exception& e) {
+                std::cout << "Error exporting timetable: " << e.what() << std::endl;
+            }
+            break;
+        }
+              // In TimetableManagementMenu.cpp, add another case:
+        case 7: {
+            int week;
+            std::cout << "\nEnter week number to resolve conflicts: ";
+            std::cin >> week;
+            std::cin.ignore();
+            try {
+                timetableManager.resolveConflictsInTimetable(week);
+                std::cout << "Conflict resolution completed." << std::endl;
+            }
+            catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << std::endl;
+            }
+            break;
+        }
+        case 0:
+            std::cout << "Returning to Admin Menu..." << std::endl;
+            break;
+        default:
+            std::cout << "Invalid option. Please try again." << std::endl;
+        }
+    } while (choice != 0);
+}
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\TimetableManager.cpp ---   & type "C:\Users\Francisco\Documents\New folder\src\TimetableManager.cpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\TimetableManager.cpp --- 
+#include "TimetableManager.hpp"
+#include "Session.hpp"
+#include "TimeUtility.hpp"
+#include <sstream>
+#include <fstream>
+
+TimetableManager::TimetableManager() : timetables() {}
+
+void TimetableManager::createTimetable(int weekNumber, const Timetable& timetable) {
+    auto it = std::find_if(timetables.begin(), timetables.end(),
+        [weekNumber](const Timetable& t) { return t.getWeekNumber() == weekNumber; });
+    if (it != timetables.end()) {
+        throw std::runtime_error("Timetable for week " + std::to_string(weekNumber) + " already exists.");
+    }
+    timetables.push_back(timetable);
+}
+
+void TimetableManager::updateTimetable(int weekNumber, const Timetable& timetable) {
+    auto it = std::find_if(timetables.begin(), timetables.end(),
+        [weekNumber](const Timetable& t) { return t.getWeekNumber() == weekNumber; });
+    if (it != timetables.end()) {
+        *it = timetable;
+    }
+    else {
+        throw std::runtime_error("Timetable for week " + std::to_string(weekNumber) + " not found.");
+    }
+}
+
+Timetable TimetableManager::getTimetable(int weekNumber) const {
+    auto it = std::find_if(timetables.begin(), timetables.end(),
+        [weekNumber](const Timetable& t) { return t.getWeekNumber() == weekNumber; });
+    if (it != timetables.end()) {
+        return *it;
+    }
+    else {
+        throw std::runtime_error("Timetable for week " + std::to_string(weekNumber) + " not found.");
+    }
+}
+
+void TimetableManager::listTimetable(int weekNumber) const {
+    try {
+        Timetable t = getTimetable(weekNumber);
+        t.displayTimetable();
+    }
+    catch (const std::runtime_error& e) {
+        std::cout << "Error: " << e.what() << std::endl;
+    }
+}
+
+std::vector<std::string> TimetableManager::searchConflicts() const {
+    std::vector<std::string> conflicts;
+
+    // For each timetable in the collection.
+    for (const auto& timetable : timetables) {
+        // Retrieve the sessions in this timetable.
+        const std::vector<std::string>& sessList = timetable.getSessions();
+
+        // Compare every pair of sessions.
+        for (size_t i = 0; i < sessList.size(); ++i) {
+            Session s1 = parseSession(sessList[i]);
+            for (size_t j = i + 1; j < sessList.size(); ++j) {
+                Session s2 = parseSession(sessList[j]);
+                // If sessions are on the same day and in the same room...
+                if (s1.day == s2.day && s1.roomId == s2.roomId) {
+                    // ...and their time intervals overlap:
+                    if (s1.startTime < s2.endTime && s2.startTime < s1.endTime) {
+                        std::ostringstream oss;
+                        oss << "Conflict between " << s1.courseName << " and " << s2.courseName
+                            << " in room " << s1.roomId << " on " << s1.day
+                            << ". Times: [" << minutesToHHMM12(s1.startTime) << ", " << minutesToHHMM12(s1.endTime)
+                            << "] vs [" << minutesToHHMM12(s2.startTime) << ", " << minutesToHHMM12(s2.endTime) << "].";
+                        conflicts.push_back(oss.str());
+                    }
+                }
+            }
+        }
+    }
+
+    return conflicts;
+}
+
+std::vector<std::string> TimetableManager::searchTimetableByKeyword(const std::string& keyword) const {
+    std::vector<std::string> results;
+    // Loop through every timetable
+    for (const auto &timetable : timetables) {
+        int week = timetable.getWeekNumber();
+        const auto &sessions = timetable.getSessions();
+        for (const auto &sessionStr : sessions) {
+            // A simple search: if the session string contains the keyword.
+            if (sessionStr.find(keyword) != std::string::npos) {
+                results.push_back("Week " + std::to_string(week) + ": " + sessionStr);
+            }
+        }
+    }
+    return results;
+}
+
+// E3. Export timetable of a specified week to CSV.
+void TimetableManager::exportTimetableToCSV(int weekNumber, const std::string& filename) const {
+    // Create a local copy of the filename so we can modify it if needed.
+    std::string actualFilename = filename;
+    // Check if the filename ends with ".csv"
+    if (actualFilename.size() < 4 || actualFilename.substr(actualFilename.size() - 4) != ".csv") {
+        actualFilename += ".csv";
+    }
+
+    std::ofstream outFile;
+    outFile.open(actualFilename.c_str());
+    if (!outFile.is_open()) {
+        throw std::runtime_error("Could not open file " + actualFilename + " for writing.");
+    }
+
+    // (Optional) Print the filename for confirmation.
+    std::cout << "Exporting CSV to: " << actualFilename << std::endl;
+
+    // Write CSV header.
+    outFile << "Week,Session" << std::endl;
+
+    try {
+        Timetable t = getTimetable(weekNumber);
+        for (const auto& session : t.getSessions()) {
+            outFile << weekNumber << "," << session << std::endl;
+        }
+    }
+    catch (const std::exception& e) {
+        outFile.close();
+        throw;
+    }
+    outFile.close();
+}
+
+
+// Helper: formats a Session struct back into the standard session string format.
+static std::string formatSession(const Session& s) {
+    std::ostringstream oss;
+    oss << s.courseName << " " << s.sessionType << " " << s.day << " "
+        << s.startTime << " " << s.endTime << " " << s.roomId;
+    return oss.str();
+}
+
+void TimetableManager::resolveConflictsInTimetable(int weekNumber) {
+    // Retrieve the timetable for the week.
+    Timetable t = getTimetable(weekNumber);
+    // Access the session list. Since getSessions() returns a const reference,
+    // we use const_cast for simple in-place modification. (Ideally, design for modifiability.)
+    std::vector<std::string>& sessList = const_cast<std::vector<std::string>&>(t.getSessions());
+    bool conflictResolved = false;
+
+    // Iterate over each pair of sessions.
+    for (size_t i = 0; i < sessList.size(); ++i) {
+        Session s1 = parseSession(sessList[i]);
+        for (size_t j = i + 1; j < sessList.size(); ++j) {
+            Session s2 = parseSession(sessList[j]);
+            // Check if sessions occur on the same day in the same room.
+            if (s1.day == s2.day && s1.roomId == s2.roomId) {
+                // Check for overlapping times:
+                if (s1.startTime < s2.endTime && s2.startTime < s1.endTime) {
+                    // Assume s2 is the later session (if its startTime is greater) and adjust it.
+                    if (s2.startTime >= s1.startTime) {
+                        int duration = s2.endTime - s2.startTime;
+                        // Move s2 so that its start time becomes s1.endTime.
+                        s2.startTime = s1.endTime;
+                        s2.endTime = s2.startTime + duration;
+                        // Update session string.
+                        sessList[j] = formatSession(s2);
+                        conflictResolved = true;
+                        std::cout << "Resolved conflict: "
+                            << s2.courseName << " moved to start at "
+                            << minutesToHHMM12(s2.startTime)
+                            << " (ends at " << minutesToHHMM12(s2.endTime)
+                            << ")." << std::endl;
+                    }
+                }
+            }
+        }
+    }
+
+    if (!conflictResolved) {
+        std::cout << "No conflicts required resolution." << std::endl;
+    }
+    else {
+        // Update the internal timetable.
+        // Remove any existing timetable with the same weekNumber.
+        auto it = std::remove_if(timetables.begin(), timetables.end(),
+            [weekNumber](const Timetable& tt) { return tt.getWeekNumber() == weekNumber; });
+        if (it != timetables.end()) {
+            timetables.erase(it, timetables.end());
+        }
+        // Add the updated timetable.
+        timetables.push_back(t);
+    }
+}
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\User.cpp ---   & type "C:\Users\Francisco\Documents\New folder\src\User.cpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\User.cpp --- 
+#include "User.hpp"
+
+// Default constructor initializes an empty user.
+User::User() : userID(""), name("") {
+}
+
+// Parameterized constructor initializes the user with the provided ID and name.
+User::User(const std::string &id, const std::string &name) : userID(id), name(name) {
+}
+
+// Virtual destructor to allow safe deletion of derived objects.
+User::~User() {
+    // Cleanup tasks if necessary.
+}
+
+// Return the user's ID.
+std::string User::getUserID() const {
+    return userID;
+}
+
+// Set or update the user's ID.
+void User::setUserID(const std::string &id) {
+    userID = id;
+}
+
+// Return the user's name.
+std::string User::getName() const {
+    return name;
+}
+
+// Set or update the user's name.
+void User::setName(const std::string &name) {
+    this->name = name;
+}
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\UserManagementMenu.cpp ---   & type "C:\Users\Francisco\Documents\New folder\src\UserManagementMenu.cpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\UserManagementMenu.cpp --- 
+#include "UserManagementMenu.hpp"
+#include "Admin.hpp"
+#include "Student.hpp"
+
+void userManagementMenu(UserManager& userManager) {
+    int choice = 0;
+    do {
+        std::cout << "\n--- User Management Menu ---" << std::endl;
+        std::cout << "1. Add User" << std::endl;
+        std::cout << "2. Delete User" << std::endl;
+        std::cout << "3. Search User by ID" << std::endl;
+        std::cout << "4. List Users" << std::endl;
+        std::cout << "0. Return to Admin Menu" << std::endl;
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
+        std::cin.ignore(); // Clear newline
+
+        switch (choice) {
+        case 1: {
+            std::string id, name, role;
+            std::cout << "\nEnter new user ID: ";
+            std::getline(std::cin, id);
+            std::cout << "Enter new user name: ";
+            std::getline(std::cin, name);
+            std::cout << "Enter user role (admin/student): ";
+            std::getline(std::cin, role);
+
+            try {
+                if (role == "admin") {
+                    userManager.addUser(std::make_unique<Admin>(id, name));
+                }
+                else if (role == "student") {
+                    userManager.addUser(std::make_unique<Student>(id, name));
+                }
+                else {
+                    std::cout << "Invalid role. Use 'admin' or 'student'." << std::endl;
+                }
+                std::cout << "User added successfully." << std::endl;
+            }
+            catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << std::endl;
+            }
+            break;
+        }
+        case 2: {
+            std::string id;
+            std::cout << "\nEnter user ID to delete: ";
+            std::getline(std::cin, id);
+            try {
+                userManager.removeUser(id);
+                std::cout << "User deleted successfully." << std::endl;
+            }
+            catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << std::endl;
+            }
+            break;
+        }
+        case 3: {
+            std::string id;
+            std::cout << "\nEnter user ID to search: ";
+            std::getline(std::cin, id);
+            User* user = userManager.findUserById(id);
+            if (user) {
+                std::cout << "User found:" << std::endl;
+                user->displayUserInfo();
+            }
+            else {
+                std::cout << "User with ID " << id << " not found." << std::endl;
+            }
+            break;
+        }
+        case 4: {
+            std::cout << "\nListing all users:" << std::endl;
+            userManager.listUsers();
+            break;
+        }
+        case 0:
+            std::cout << "Returning to Admin Menu..." << std::endl;
+            break;
+        default:
+            std::cout << "Invalid choice. Please try again." << std::endl;
+        }
+    } while (choice != 0);
+}
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\UserManager.cpp ---   & type "C:\Users\Francisco\Documents\New folder\src\UserManager.cpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\UserManager.cpp --- 
+#include "UserManager.hpp"
+
+UserManager::UserManager() : users() {}
+
+// Adds a new user to the system.
+void UserManager::addUser(std::unique_ptr<User> user) {
+    auto it = std::find_if(users.begin(), users.end(),
+        [&user](const std::unique_ptr<User>& u) {
+            return u->getUserID() == user->getUserID();
+        });
+    if (it != users.end()) {
+        throw std::runtime_error("User with ID " + user->getUserID() + " already exists.");
+    }
+    users.push_back(std::move(user));
+}
+
+// Searches for a user by user ID.
+User* UserManager::findUserById(const std::string& userId) const {
+    auto it = std::find_if(users.begin(), users.end(),
+        [&userId](const std::unique_ptr<User>& u) {
+            return u->getUserID() == userId;
+        });
+    return (it != users.end()) ? it->get() : nullptr;
+}
+
+// Removes a user by their user ID.
+void UserManager::removeUser(const std::string& userId) {
+    auto it = std::remove_if(users.begin(), users.end(),
+        [&userId](const std::unique_ptr<User>& u) {
+            return u->getUserID() == userId;
+        });
+    if (it != users.end()) {
+        users.erase(it, users.end());
+    }
+    else {
+        throw std::runtime_error("User with ID " + userId + " not found. Cannot delete.");
+    }
+}
+
+// Lists all registered users.
+void UserManager::listUsers() const {
+    if (users.empty()) {
+        std::cout << "No users available." << std::endl;
+        return;
+    }
+    for (const auto& u : users) {
+        u->displayUserInfo();
+        std::cout << "-----------------" << std::endl;
+    }
+}
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\Admin.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\Admin.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\Admin.hpp --- 
+#ifndef ADMIN_HPP
+#define ADMIN_HPP
+
+#include "User.hpp"
+#include <iostream>
+
+/*
+ * Class: Admin
+ * -------------------------------
+ * Derived from the User class.
+ * Represents an administrative user in the timetabling system.
+ * This class is intended to provide functionalities specific to admin tasks,
+ * such as managing modules, groups, sessions, rooms, and timetables.
+ */
+class Admin : public User {
+public:
+    // Default constructor
+    Admin();
+
+    // Parameterized constructor to initialize admin with an ID and name.
+    Admin(const std::string &id, const std::string &name);
+
+    // Destructor
+    virtual ~Admin();
+
+    // Override the pure virtual function to display admin information.
+    virtual void displayUserInfo() const override;
+
+    // Additional admin-specific methods can be declared here.
+    // For example:
+    // void manageModules();
+};
+
+#endif // ADMIN_HPP
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\AuthManager.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\AuthManager.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\AuthManager.hpp --- 
+#ifndef AUTH_MANAGER_HPP
+#define AUTH_MANAGER_HPP
+
+#include "UserManager.hpp"
+#include "User.hpp"
+
+/*
+ * Class: AuthManager
+ * -------------------------------
+ * Handles user authentication.
+ */
+class AuthManager {
+private:
+    UserManager& userManager; // Reference to the UserManager instance.
+public:
+    AuthManager(UserManager& um);
+    // Login function only declared here.
+    User* loginUser(const std::string& userId);
+};
+
+#endif // AUTH_MANAGER_HPP
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\Group.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\Group.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\Group.hpp --- 
+#ifndef GROUP_HPP
+#define GROUP_HPP
+
+#include <string>
+#include <iostream>
+
+class Group {
+private:
+    std::string groupId;
+    std::string groupName;
+public:
+    // Constructors
+    Group() : groupId(""), groupName("") {}
+    Group(const std::string& id, const std::string& name) : groupId(id), groupName(name) {}
+
+    // Getters
+    std::string getGroupId() const { return groupId; }
+    std::string getGroupName() const { return groupName; }
+
+    // Display method for group details
+    void displayGroup() const {
+        std::cout << "Group ID: " << groupId << "\nGroup Name: " << groupName << std::endl;
+    }
+};
+
+#endif // GROUP_HPP
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\GroupManagementMenu.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\GroupManagementMenu.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\GroupManagementMenu.hpp --- 
+#ifndef GROUPMANAGEMENTMENU_HPP
+#define GROUPMANAGEMENTMENU_HPP
+
+#include "GroupManager.hpp"
+
+// Displays the Group Management sub-menu for admins.
+void groupManagementMenu(GroupManager& groupManager);
+
+#endif // GROUPMANAGEMENTMENU_HPP
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\GroupManager.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\GroupManager.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\GroupManager.hpp --- 
+#ifndef GROUPMANAGER_HPP
+#define GROUPMANAGER_HPP
+
+#include "Group.hpp"
+#include <vector>
+#include <string>
+#include <stdexcept>
+#include <algorithm>
+#include <iostream>
+
+class GroupManager {
+private:
+    std::vector<Group> groups;
+public:
+    GroupManager();
+
+    // CRUD functions for Group
+    void addGroup(const Group& group);
+    void updateGroup(const std::string& groupId, const Group& updatedGroup);
+    void deleteGroup(const std::string& groupId);
+    void listGroups() const;
+};
+
+#endif // GROUPMANAGER_HPP
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\Module.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\Module.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\Module.hpp --- 
+#ifndef MODULE_HPP
+#define MODULE_HPP
+
+#include <string>
+#include <iostream>
+
+/*
+ * Class: Module
+ * -------------------------------
+ * Represents an academic module with a unique code, a name, and a description.
+ * Provides basic CRUD functionality through getters and setters, as well as a 
+ * method to display the module information.
+ */
+class Module {
+private:
+    std::string moduleCode;   // Unique code for the module (e.g., "COMP1234")
+    std::string moduleName;   // Name of the module (e.g., "Introduction to Programming")
+    std::string description;  // Brief description of the module content
+
+public:
+    // Default constructor for an empty Module object.
+    Module();
+
+    // Parameterized constructor to create a module with specified attributes.
+    Module(const std::string &code, const std::string &name, const std::string &desc);
+
+    // Copy constructor.
+    Module(const Module &other);
+
+    // Destructor.
+    ~Module();
+
+    // Getter for moduleCode.
+    std::string getModuleCode() const;
+
+    // Setter for moduleCode.
+    void setModuleCode(const std::string &code);
+    
+    // Getter for moduleName.
+    std::string getModuleName() const;
+
+    // Setter for moduleName.
+    void setModuleName(const std::string &name);
+    
+    // Getter for description.
+    std::string getDescription() const;
+
+    // Setter for description.
+    void setDescription(const std::string &desc);
+    
+    // Display module details to the console.
+    void displayModule() const;
+};
+
+#endif // MODULE_HPP
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\ModuleManagementMenu.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\ModuleManagementMenu.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\ModuleManagementMenu.hpp --- 
+// ModuleManagementMenu.hpp
+#ifndef MODULEMANAGEMENTMENU_HPP
+#define MODULEMANAGEMENTMENU_HPP
+
+#include "ModuleManager.hpp"
+#include <iostream>
+#include <string>
+
+void moduleManagementMenu(ModuleManager& moduleManager);
+
+#endif // MODULEMANAGEMENTMENU_HPP
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\ModuleManager.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\ModuleManager.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\ModuleManager.hpp --- 
+#ifndef MODULEMANAGER_HPP
+#define MODULEMANAGER_HPP
+
+#include "Module.hpp"       // This header should define your Module class.
+#include <vector>
+#include <algorithm>
+#include <stdexcept>
+#include <iostream>
+#include <string>
+
+class ModuleManager {
+private:
+    std::vector<Module> modules;
+public:
+    ModuleManager();
+    void addModule(const Module& module);
+    void updateModule(const std::string& moduleCode, const Module& updatedModule);
+    void deleteModule(const std::string& moduleCode);
+    Module searchModule(const std::string& moduleCode) const;
+    void listModules() const;
+};
+
+#endif // MODULEMANAGER_HPP
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\Room.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\Room.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\Room.hpp --- 
+#ifndef ROOM_HPP
+#define ROOM_HPP
+
+#include <string>
+#include <iostream>
+
+class Room {
+private:
+    std::string roomId;
+    std::string roomName; // E.g., "John Clare Lecture Theatre 006"
+public:
+    Room() : roomId(""), roomName("") {}
+    Room(const std::string& id, const std::string& name) : roomId(id), roomName(name) {}
+
+    std::string getRoomId() const { return roomId; }
+    std::string getRoomName() const { return roomName; }
+
+    void displayRoom() const {
+        std::cout << "Room ID: " << roomId << "\nRoom Name: " << roomName << std::endl;
+    }
+};
+
+#endif // ROOM_HPP
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\RoomManagementMenu.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\RoomManagementMenu.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\RoomManagementMenu.hpp --- 
+#ifndef ROOMMANAGEMENTMENU_HPP
+#define ROOMMANAGEMENTMENU_HPP
+
+#include "RoomManager.hpp"
+
+// Displays the Room Management sub-menu for admins.
+void roomManagementMenu(RoomManager& roomManager);
+
+#endif // ROOMMANAGEMENTMENU_HPP
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\RoomManager.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\RoomManager.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\RoomManager.hpp --- 
+#ifndef ROOMMANAGER_HPP
+#define ROOMMANAGER_HPP
+
+#include "Room.hpp"
+#include <vector>
+#include <string>
+#include <stdexcept>
+#include <algorithm>
+#include <iostream>
+
+class RoomManager {
+private:
+    std::vector<Room> rooms;
+public:
+    RoomManager();
+
+    // CRUD functions for Room
+    void addRoom(const Room& room);
+    void updateRoom(const std::string& roomId, const Room& updatedRoom);
+    void deleteRoom(const std::string& roomId);
+    void listRooms() const;
+};
+
+#endif // ROOMMANAGER_HPP
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\Session.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\Session.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\Session.hpp --- 
+#ifndef SESSION_HPP
+#define SESSION_HPP
+
+#include <string>
+#include <sstream>
+
+// A structure to represent a single session in a timetable.
+struct Session {
+    std::string courseName;
+    std::string sessionType;
+    std::string day;
+    int startTime; // Represent time as minutes since midnight.
+    int endTime;
+    std::string roomId;
+};
+
+// Helper function: Parses a formatted session string into a Session struct.
+// Expected format: "COMP101 Lecture Monday 600 660 R001"
+inline Session parseSession(const std::string& sessionStr) {
+    std::istringstream iss(sessionStr);
+    Session s;
+    iss >> s.courseName >> s.sessionType >> s.day >> s.startTime >> s.endTime >> s.roomId;
+    return s;
+}
+
+#endif // SESSION_HPP
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\SessionType.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\SessionType.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\SessionType.hpp --- 
+#ifndef SESSIONTYPE_HPP
+#define SESSIONTYPE_HPP
+
+#include <string>
+#include <iostream>
+
+class SessionType {
+private:
+    std::string typeId;
+    std::string typeName; // e.g., Lecture, Lab
+public:
+    SessionType() : typeId(""), typeName("") {}
+    SessionType(const std::string& id, const std::string& name) : typeId(id), typeName(name) {}
+
+    std::string getTypeId() const { return typeId; }
+    std::string getTypeName() const { return typeName; }
+
+    void displaySessionType() const {
+        std::cout << "Session Type ID: " << typeId << "\nSession Type: " << typeName << std::endl;
+    }
+};
+
+#endif // SESSIONTYPE_HPP
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\SessionTypeManagementMenu.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\SessionTypeManagementMenu.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\SessionTypeManagementMenu.hpp --- 
+#ifndef SESSIONTYPEMANAGEMENTMENU_HPP
+#define SESSIONTYPEMANAGEMENTMENU_HPP
+
+#include "SessionTypeManager.hpp"
+
+// Displays the Session Type Management sub-menu for admins.
+void sessionTypeManagementMenu(SessionTypeManager& sessionTypeManager);
+
+#endif // SESSIONTYPEMANAGEMENTMENU_HPP
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\SessionTypeManager.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\SessionTypeManager.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\SessionTypeManager.hpp --- 
+#ifndef SESSIONTYPEMANAGER_HPP
+#define SESSIONTYPEMANAGER_HPP
+
+#include "SessionType.hpp"
+#include <vector>
+#include <string>
+#include <stdexcept>
+#include <algorithm>
+#include <iostream>
+
+class SessionTypeManager {
+private:
+    std::vector<SessionType> sessionTypes;
+public:
+    SessionTypeManager();
+
+    // CRUD functions for SessionType
+    void addSessionType(const SessionType& sessionType);
+    void updateSessionType(const std::string& typeId, const SessionType& updatedSessionType);
+    void deleteSessionType(const std::string& typeId);
+    void listSessionTypes() const;
+};
+
+#endif // SESSIONTYPEMANAGER_HPP
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\Student.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\Student.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\Student.hpp --- 
+#ifndef STUDENT_HPP
+#define STUDENT_HPP
+
+#include "User.hpp"
+#include <iostream>
+#include <string>
+
+/*
+ * Class: Student
+ * -------------------------------
+ * Derived from the abstract base class User.
+ * Represents a student user in the timetabling system.
+ */
+class Student : public User {
+public:
+    // Default constructor
+    Student();
+
+    // Parameterized constructor to initialize a student with an ID and name.
+    Student(const std::string& id, const std::string& name);
+
+    // Destructor
+    virtual ~Student();
+
+    // Override displayUserInfo to show student-specific information.
+    virtual void displayUserInfo() const override;
+};
+
+#endif // STUDENT_HPP
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\Timetable.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\Timetable.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\Timetable.hpp --- 
+#ifndef TIMETABLE_HPP
+#define TIMETABLE_HPP
+
+#include <vector>
+#include <string>
+#include <iostream>
+
+class Timetable {
+private:
+    int weekNumber;
+    std::vector<std::string> sessions; // Each session as a formatted string.
+public:
+    Timetable();
+    Timetable(int week);
+    int getWeekNumber() const;
+    void addSession(const std::string& sessionDetail);
+    void displayTimetable() const;
+    const std::vector<std::string>& getSessions() const; // <-- New getter
+};
+
+#endif // TIMETABLE_HPP
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\TimetableManagementMenu.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\TimetableManagementMenu.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\TimetableManagementMenu.hpp --- 
+#ifndef TIMETABLEMANAGEMENTMENU_HPP
+#define TIMETABLEMANAGEMENTMENU_HPP
+
+#include "TimetableManager.hpp"
+
+// Displays the Timetable Management sub-menu for admins.
+void timetableManagementMenu(TimetableManager& timetableManager);
+
+#endif // TIMETABLEMANAGEMENTMENU_HPP
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\TimetableManager.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\TimetableManager.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\TimetableManager.hpp --- 
+#ifndef TIMETABLEMANAGER_HPP
+#define TIMETABLEMANAGER_HPP
+
+#include "Timetable.hpp"
+#include <vector>
+#include <string>
+#include <stdexcept>
+#include <algorithm>
+#include <iostream>
+
+class TimetableManager {
+private:
+    std::vector<Timetable> timetables;
+public:
+    TimetableManager();
+
+    // Function to create a new timetable for a given week
+    void createTimetable(int weekNumber, const Timetable& timetable);
+
+    // Function to update an existing timetable
+    void updateTimetable(int weekNumber, const Timetable& timetable);
+
+    // Retrieve timetable for a given week; throws error if not found.
+    Timetable getTimetable(int weekNumber) const;
+
+    // Display timetable for a given week
+    void listTimetable(int weekNumber) const;
+
+    // Advanced function: search for scheduling conflicts
+    // (For simplicity, returns a vector of strings describing conflicts.)
+    std::vector<std::string> searchConflicts() const;
+
+    // Advanced: search through all timetables by a keyword.
+    std::vector<std::string> searchTimetableByKeyword(const std::string& keyword) const;
+
+    // Advanced: export a timetable to a CSV file.
+    void exportTimetableToCSV(int weekNumber, const std::string& filename) const;
+
+    // Resolves conflicts in a timetable for the specified week by moving the later session.
+    void resolveConflictsInTimetable(int weekNumber);
+
+};
+
+
+
+#endif // TIMETABLEMANAGER_HPP
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\TimeUtility.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\TimeUtility.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\TimeUtility.hpp --- 
+#ifndef TIME_UTILS_HPP
+#define TIME_UTILS_HPP
+
+#include <string>
+#include <sstream>
+#include <iomanip>
+
+// Converts minutes since midnight into a 12-hour "HH:MM AM/PM" format string.
+// For example, 600 becomes "10:00 AM" and 750 becomes "12:30 PM".
+inline std::string minutesToHHMM12(int totalMinutes) {
+    // Normalize total minutes to within 0 and 1439 (24*60) to handle values greater than a day.
+    totalMinutes = totalMinutes % (24 * 60);
+
+    int hours = totalMinutes / 60;
+    int mins = totalMinutes % 60;
+
+    bool isPM = (hours >= 12);
+    // For 12-hour format, convert 0 to 12, and reduce hours > 12.
+    int displayHours = hours % 12;
+    if (displayHours == 0) {
+        displayHours = 12;
+    }
+
+    std::ostringstream oss;
+    oss << std::setw(2) << std::setfill('0') << displayHours << ":"
+        << std::setw(2) << std::setfill('0') << mins
+        << (isPM ? " PM" : " AM");
+    return oss.str();
+}
+
+#endif // TIME_UTILS_HPP
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\User.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\User.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\User.hpp --- 
+#ifndef USER_H
+#define USER_H
+
+#include <string>
+
+/*
+ * Abstract Class: User
+ * -------------------------------
+ * Serves as the base class for all user types (Admin, Student).
+ * Contains common attributes and methods. It includes a pure virtual
+ * function 'displayUserInfo' for polymorphic behavior in derived classes.
+ */
+class User {
+protected:
+    std::string userID;  // Unique identifier for the user.
+    std::string name;    // The user's full name.
+
+public:
+    // Default constructor.
+    User();
+
+    // Parameterized constructor to initialize user with an ID and name.
+    User(const std::string &id, const std::string &name);
+
+    // Virtual destructor to ensure proper cleanup in derived classes.
+    virtual ~User();
+
+    // Getter for user ID.
+    std::string getUserID() const;
+
+    // Setter for user ID.
+    void setUserID(const std::string &id);
+    
+    // Getter for user name.
+    std::string getName() const;
+
+    // Setter for user name.
+    void setName(const std::string &name);
+    
+    // Pure virtual function to display user information.
+    virtual void displayUserInfo() const = 0;
+};
+
+#endif // USER_H
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\UserManagementMenu.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\UserManagementMenu.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\UserManagementMenu.hpp --- 
+#ifndef USERMANAGEMENTMENU_HPP
+#define USERMANAGEMENTMENU_HPP
+
+#include "UserManager.hpp"
+#include <iostream>
+#include <string>
+
+// This function displays the user management sub-menu.
+// It lets the admin add a new user, delete an existing user, search for a user, or list all users.
+void userManagementMenu(UserManager& userManager);
+
+#endif // USERMANAGEMENTMENU_HPP
+
+
+C:\Users\Francisco\Documents\New folder\src>(echo --- C:\Users\Francisco\Documents\New folder\src\UserManager.hpp ---   & type "C:\Users\Francisco\Documents\New folder\src\UserManager.hpp"   & echo.) 
+--- C:\Users\Francisco\Documents\New folder\src\UserManager.hpp --- 
+#ifndef USERMANAGER_HPP
+#define USERMANAGER_HPP
+
+#include "User.hpp"          // Ensure that this file exists and is correct.
+#include <vector>
+#include <memory>          // For std::unique_ptr
+#include <algorithm>       // For std::find_if and std::remove_if
+#include <stdexcept>       // For std::runtime_error
+#include <iostream>
+#include <string>
+
+class UserManager {
+private:
+    std::vector<std::unique_ptr<User>> users;
+public:
+    UserManager();
+    void addUser(std::unique_ptr<User> user);
+    User* findUserById(const std::string& userId) const;
+    void removeUser(const std::string& userId);
+    void listUsers() const;
+};
+
+#endif // USERMANAGER_HPP
+
