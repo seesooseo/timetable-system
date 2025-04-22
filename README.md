@@ -123,7 +123,7 @@ cmake --build . --target cppcheck
 - [x] Role-based CLI menus
 - [x] Release ZIP via CPack
 - [x] README + usage guide
-- [ ] Final report + UML
+- [x] Final report + UML
 - [ ] Video demo (≤ 5 min)
 - [ ] Submission via NOW
 

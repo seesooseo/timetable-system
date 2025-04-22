@@ -70,15 +70,13 @@ list(REMOVE_ITEM ALL_SOURCES
 )
 
 add_library(core STATIC
-    ${ALL_SOURCES}
-    src/LectureManagementMenu.cpp
-    src/LecturerManager.cpp
-    src/LectureManagementMenu.hpp
- "src/Persistence.cpp")
-target_include_directories(core
-  PUBLIC
-    ${CMAKE_SOURCE_DIR}/src      # so users of core can #include "Foo.hpp"
-    ${CMAKE_SOURCE_DIR}/lib      # <json.hpp> lives here
+  ${ALL_SOURCES}
+  ${CORE_SOURCES}
+)
+
+target_include_directories(core PUBLIC
+  ${CMAKE_SOURCE_DIR}/src
+  ${CMAKE_SOURCE_DIR}/lib
 )
 
 add_executable(timetable
@@ -86,7 +84,9 @@ add_executable(timetable
     src/LectureManagementMenu.cpp
     src/LecturerManager.cpp
     src/LectureManagementMenu.hpp
- "src/Persistence.cpp")
+    src/Timetable.cpp
+    src/TimeUtility.hpp
+ "src/Persistence.cpp" "src/TimeValidation.cpp" "src/SampleData.cpp")
 target_link_libraries(timetable PRIVATE core)
 
 # — Enable testing and set up test executable —
@@ -96,7 +96,9 @@ add_executable(run_tests
     src/LectureManagementMenu.cpp
     src/LecturerManager.cpp
     src/LectureManagementMenu.hpp
- "src/Persistence.cpp")
+    src/Timetable.cpp
+    src/TimeUtility.hpp
+ "src/Persistence.cpp" "src/TimeValidation.cpp" "src/SampleData.cpp")
 target_link_libraries(run_tests PRIVATE core)
 add_test(NAME AllTests COMMAND run_tests)
 

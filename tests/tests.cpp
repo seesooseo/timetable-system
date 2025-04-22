@@ -238,7 +238,9 @@ void testValidateTime() {
 
     // Case 1: start > end should throw
     try {
-        validateTimes(700, 699);
+        int startTime = 700;
+        int endTime = 699;
+        getValidTimeInput(startTime, endTime);
     }
     catch (const std::runtime_error&) {
         thrown1 = true;
@@ -246,19 +248,33 @@ void testValidateTime() {
 
     // Case 2: negative start should throw
     try {
-        validateTimes(-10, 30);
+        int startTime = -10;
+        int endTime = 30;
+        getValidTimeInput(startTime, endTime);
     }
     catch (const std::runtime_error&) {
         thrown2 = true;
     }
 
-    if (thrown1 && thrown2) {
+    // Case 3: valid range should not throw
+    bool thrown3 = false;
+    try {
+        int startTime = 500;
+        int endTime = 600;
+        getValidTimeInput(startTime, endTime);  // valid case
+    }
+    catch (...) {
+        thrown3 = true;
+    }
+
+    if (thrown1 && thrown2 && !thrown3) {
         std::cout << "testValidateTime: PASS\n";
     }
     else {
         std::cout << "testValidateTime: FAIL ("
             << "thrown1=" << thrown1 << ", "
-            << "thrown2=" << thrown2 << ")\n";
+            << "thrown2=" << thrown2 << ", "
+            << "thrown3=" << thrown3 << ")\n";
     }
 }
 

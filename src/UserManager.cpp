@@ -1,8 +1,9 @@
-#include "UserManager.hpp"
+﻿#include "UserManager.hpp"
 #include <Student.hpp>
 #include <algorithm>
 #include<stdexcept>
 #include <Admin.hpp>
+#include <GroupManager.hpp>
 
 UserManager::UserManager() : users() {}
 
@@ -75,9 +76,24 @@ Student* UserManager::findStudent(const std::string& id) const {
     return dynamic_cast<Student*>(u);
 }
 
-void UserManager::assignStudentToGroup(const std::string& studentId,
-    const std::string& groupId) {
-    Student* s = findStudent(studentId);
-    if (!s) throw std::runtime_error("Student not found");
-    s->setGroup(groupId);
-}
+void UserManager::assignStudentToGroup(
+    const std::string& studentId,
+    const std::string& groupId,
+    const GroupManager& groupManager
+) {
+    // 1) ensure the group actually exists
+        // find the student
+        User * u = findUserById(studentId);
+        if (!u) throw std::runtime_error("Student ID " + studentId + " not found");
+            auto * s = dynamic_cast<Student*>(u);
+            if (!s) throw std::runtime_error("User " + studentId + " is not a student");
+    
+            // verify that group exists
+                if (!groupManager.findGroup(groupId)) {
+                throw std::runtime_error("Group ID " + groupId + " does not exist");
+           
+                }
+    
+                // assign
+            s->setGroup(groupId);
+    }

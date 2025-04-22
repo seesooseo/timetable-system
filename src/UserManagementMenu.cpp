@@ -3,8 +3,9 @@
 #include "InputUtility.hpp"    // ← include the helper
 #include "Admin.hpp"
 #include "Student.hpp"
+#include <GroupManager.hpp>
 
-void userManagementMenu(UserManager& userManager) {
+void userManagementMenu(UserManager& userManager, GroupManager& groupManager) {
     int choice;
     do {
         std::cout << "\n--- User Management Menu ---\n";
@@ -82,7 +83,7 @@ void userManagementMenu(UserManager& userManager) {
             std::cout << "Group ID: ";
             std::getline(std::cin, gid);
             try {
-                userManager.assignStudentToGroup(sid, gid);
+                userManager.assignStudentToGroup(sid, gid, groupManager);
             }
             catch (const std::exception& e) {
                 std::cout << "Error: " << e.what() << "\n";

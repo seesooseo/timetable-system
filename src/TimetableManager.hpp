@@ -46,6 +46,12 @@ public:
         std::optional<std::string> lecturer) const;
 
     const std::vector<Timetable>& getTimetables() const { return timetables; }
+
+    bool isRoomAvailable(int weekNumber,
+        const std::string & day,
+        const std::string & roomId,
+        int startTime,
+        int endTime) const;
 };
 
 

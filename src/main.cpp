@@ -25,6 +25,7 @@
 #include "LecturerManager.hpp"
 #include <InputUtility.hpp>
 #include <Persistence.hpp>
+#include <SampleData.hpp>
 
 
 // Forward declarations for menus and login.
@@ -37,7 +38,7 @@ void adminExtendedMenu(
     TimetableManager& timetableManager,
     LecturerManager& lectureManager
 );
-void studentMenu(ModuleManager& moduleManager, UserManager& userManager);
+void studentMenu(ModuleManager& moduleManager, UserManager& userManager, TimetableManager& timetableManager);
 
 
 // This function populates default data into all manager instances.
@@ -113,15 +114,7 @@ int main() {
     LecturerManager      lecturerManager;
     TimetableManager     timetableManager;
 
-    Persistence::loadAll("data.json",
-        moduleManager,  // add getters for all lists if needed
-        roomManager,
-        sessionTypeManager,
-        groupManager,
-        userManager,
-        lecturerManager,
-        timetableManager);
-    return 0;
+    
 
     for (auto& m : modules)        moduleManager.addModule(m);
     for (auto& r : rooms)          roomManager.addRoom(r);
@@ -133,14 +126,45 @@ int main() {
     for (auto& tt : timetables)     timetableManager.createTimetable(tt.getWeekNumber(), tt);
 
 
-    // Populate default data into the system.
-    populateDefaultData(userManager, moduleManager, groupManager,
-        sessionTypeManager, roomManager, timetableManager, lecturerManager);
 
     AuthManager authManager(userManager);
 
     // Main menu loop for login.
     while (true) {
+        generateSampleJSON("sample.json");
+        Persistence::loadAll(
+            "sample.json",
+            moduleManager,
+            roomManager,
+            sessionTypeManager,
+            groupManager,
+            userManager,
+            lecturerManager,
+            timetableManager
+        );
+
+        if (userManager.getAdmins().empty()) {
+            // file had no admin entries → seed at least one
+            populateDefaultData(
+                userManager,
+                moduleManager,
+                groupManager,
+                sessionTypeManager,
+                roomManager,
+                timetableManager,
+                lecturerManager
+            );
+            Persistence::saveAll(
+                "sample.json",
+                moduleManager,
+                roomManager,
+                sessionTypeManager,
+                groupManager,
+                userManager,
+                lecturerManager,
+                timetableManager
+            );
+        }
         std::cout << "\n=== NTU Timetabling System ===\n";
         std::cout << "1. Login\n";
         std::cout << "0. Exit\n";
@@ -165,7 +189,7 @@ int main() {
                         lecturerManager);
                 }
                 else if (dynamic_cast<Student*>(currentUser)) {
-                    studentMenu(moduleManager, userManager);
+                    studentMenu(moduleManager, userManager, timetableManager);
                 }
             }
         }
@@ -200,12 +224,13 @@ User* loginUser( UserManager& userManager) {
 }
 
 // A basic student menu for demonstration.
-void studentMenu(ModuleManager& moduleManager, UserManager& userManager) {
+void studentMenu(ModuleManager& moduleManager, UserManager& userManager, TimetableManager& timetableManager) {
     int choice = 0;
     do {
         std::cout << "\n=== Student Menu ===" << std::endl;
         std::cout << "1. View Modules" << std::endl;
-        // Future options for timetable search and CSV export can be added.
+        std::cout << "2. View Weekly Schedule" << std::endl;
+        std::cout << "3. Export Schedule as CSV" << std::endl;
         std::cout << "0. Return to Main Menu" << std::endl;
         std::cout << "Enter choice: ";
         std::cin >> choice;
@@ -214,6 +239,47 @@ void studentMenu(ModuleManager& moduleManager, UserManager& userManager) {
         case 1:
             moduleManager.listModules();
             break;
+        case 2: {
+            std::string groupId;
+            std::cout << "Enter your group ID to view your timetable: ";
+            std::getline(std::cin, groupId);
+
+            int week;
+            std::cout << "Enter week number (1–54): ";
+            std::cin >> week;
+            std::cin.ignore();
+
+            try {
+                Timetable timetable = timetableManager.getTimetable(week);
+                timetable.displayForGroup(groupId);  // displayForGroup already handles display logic for the student's group
+            }
+            catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << "\n";
+            }
+            break;
+        }
+
+        case 3: {
+            std::string groupId;
+            std::cout << "Enter your group ID to export timetable: ";
+            std::getline(std::cin, groupId);
+
+            int week;
+            std::cout << "Enter week number (1–54): ";
+            std::cin >> week;
+            std::cin.ignore();
+
+            std::string filename = "Group_" + groupId + "_Week" + std::to_string(week) + ".csv";
+
+            try {
+                timetableManager.exportTimetableToCSV(week, filename);
+                std::cout << "Timetable exported successfully to " << filename << "\n";
+            }
+            catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << "\n";
+            }
+            break;
+        }
         case 0:
             std::cout << "Returning to Main Menu..." << std::endl;
             break;
@@ -255,7 +321,7 @@ void adminExtendedMenu(
             break;
         case 2:
             std::cout << "\n--- User Management ---" << std::endl;
-            userManagementMenu(userManager);
+            userManagementMenu(userManager, groupManager);
             break;
         case 3:
             std::cout << "\n--- Group Management ---" << std::endl;

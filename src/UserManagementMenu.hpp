@@ -7,6 +7,6 @@
 
 // This function displays the user management sub-menu.
 // It lets the admin add a new user, delete an existing user, search for a user, or list all users.
-void userManagementMenu(UserManager& userManager);
+void userManagementMenu(UserManager& userManager, GroupManager& groupManager);
 
 #endif // USERMANAGEMENTMENU_HPP

@@ -18,7 +18,8 @@ public:
     void deleteModule(const std::string& moduleCode);
     Module searchModule(const std::string& moduleCode) const;
     void listModules() const;
-    Module * findModule(const std::string & moduleCode);
+    Module* findModule(const std::string& moduleCode);
+    const Module * findModule(const std::string & moduleCode) const;
     const std::vector<Module>& getModules() const { return modules; }
 };
 

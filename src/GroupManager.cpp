@@ -43,3 +43,17 @@ void GroupManager::listGroups() const {
         std::cout << "-----------------" << std::endl;
     }
 }
+
+// mutable version
+Group* GroupManager::findGroup(const std::string& groupId) {
+    auto it = std::find_if(groups.begin(), groups.end(),
+        [&groupId](const Group& g) { return g.getGroupId() == groupId; });
+    return (it == groups.end() ? nullptr : &*it);
+}
+
+// const version
+const Group* GroupManager::findGroup(const std::string& groupId) const {
+    auto it = std::find_if(groups.begin(), groups.end(),
+        [&groupId](const Group& g) { return g.getGroupId() == groupId; });
+    return (it == groups.end() ? nullptr : &*it);
+}

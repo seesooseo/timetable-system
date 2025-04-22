@@ -9,6 +9,7 @@
 #include <iostream>
 #include <string>
 #include <Admin.hpp>
+#include <GroupManager.hpp>
 
 class Student;
 
@@ -22,8 +23,11 @@ public:
     void removeUser(const std::string& userId);
     void listUsers() const;
     Student* findStudent(const std::string& id) const;
-    void assignStudentToGroup(const std::string& studentId,
-        const std::string& groupId);
+    void assignStudentToGroup(
+        const std::string & studentId,
+        const std::string & groupId,
+        const GroupManager & groupManager
+        );
     std::vector<Admin*>   getAdmins()  const;
     std::vector<Student*> getStudents() const;
 

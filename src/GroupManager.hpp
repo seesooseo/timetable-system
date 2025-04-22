@@ -19,6 +19,10 @@ public:
     void updateGroup(const std::string& groupId, const Group& updatedGroup);
     void deleteGroup(const std::string& groupId);
     void listGroups() const;
+
+    // new: lookup (returns nullptr if missing)
+    Group * findGroup(const std::string & groupId);
+    const Group * findGroup(const std::string & groupId) const;
     const std::vector<Group>& getGroups() const { return groups; }
 };
 

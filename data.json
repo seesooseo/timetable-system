@@ -1,0 +1,1901 @@
+{
+  "modules": [],
+  "rooms": [],
+  "session_types": [],
+  "groups": [],
+  "admins": [],
+  "students": [],
+  "lecturers": [],
+  "timetables": [
+    {
+      "week": 1,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 601,
+          "endTime": 661,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 701,
+          "endTime": 761,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 801,
+          "endTime": 861,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 2,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 602,
+          "endTime": 662,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 702,
+          "endTime": 762,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 802,
+          "endTime": 862,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 3,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 603,
+          "endTime": 663,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 703,
+          "endTime": 763,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 803,
+          "endTime": 863,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 4,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 604,
+          "endTime": 664,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 704,
+          "endTime": 764,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 804,
+          "endTime": 864,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 5,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 605,
+          "endTime": 665,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 705,
+          "endTime": 765,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 805,
+          "endTime": 865,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 6,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 606,
+          "endTime": 666,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 706,
+          "endTime": 766,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 806,
+          "endTime": 866,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 7,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 607,
+          "endTime": 667,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 707,
+          "endTime": 767,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 807,
+          "endTime": 867,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 8,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 608,
+          "endTime": 668,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 708,
+          "endTime": 768,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 808,
+          "endTime": 868,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 9,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 609,
+          "endTime": 669,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 709,
+          "endTime": 769,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 809,
+          "endTime": 869,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 10,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 610,
+          "endTime": 670,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 710,
+          "endTime": 770,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 810,
+          "endTime": 870,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 11,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 611,
+          "endTime": 671,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 711,
+          "endTime": 771,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 811,
+          "endTime": 871,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 12,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 612,
+          "endTime": 672,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 712,
+          "endTime": 772,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 812,
+          "endTime": 872,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 13,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 613,
+          "endTime": 673,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 713,
+          "endTime": 773,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 813,
+          "endTime": 873,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 14,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 614,
+          "endTime": 674,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 714,
+          "endTime": 774,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 814,
+          "endTime": 874,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 15,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 615,
+          "endTime": 675,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 715,
+          "endTime": 775,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 815,
+          "endTime": 875,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 16,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 616,
+          "endTime": 676,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 716,
+          "endTime": 776,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 816,
+          "endTime": 876,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 17,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 617,
+          "endTime": 677,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 717,
+          "endTime": 777,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 817,
+          "endTime": 877,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 18,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 618,
+          "endTime": 678,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 718,
+          "endTime": 778,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 818,
+          "endTime": 878,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 19,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 619,
+          "endTime": 679,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 719,
+          "endTime": 779,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 819,
+          "endTime": 879,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 20,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 620,
+          "endTime": 680,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 720,
+          "endTime": 780,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 820,
+          "endTime": 880,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 21,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 621,
+          "endTime": 681,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 721,
+          "endTime": 781,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 821,
+          "endTime": 881,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 22,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 622,
+          "endTime": 682,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 722,
+          "endTime": 782,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 822,
+          "endTime": 882,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 23,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 623,
+          "endTime": 683,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 723,
+          "endTime": 783,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 823,
+          "endTime": 883,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 24,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 624,
+          "endTime": 684,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 724,
+          "endTime": 784,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 824,
+          "endTime": 884,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 25,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 625,
+          "endTime": 685,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 725,
+          "endTime": 785,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 825,
+          "endTime": 885,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 26,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 626,
+          "endTime": 686,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 726,
+          "endTime": 786,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 826,
+          "endTime": 886,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 27,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 627,
+          "endTime": 687,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 727,
+          "endTime": 787,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 827,
+          "endTime": 887,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 28,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 628,
+          "endTime": 688,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 728,
+          "endTime": 788,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 828,
+          "endTime": 888,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 29,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 629,
+          "endTime": 689,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 729,
+          "endTime": 789,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 829,
+          "endTime": 889,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 30,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 630,
+          "endTime": 690,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 730,
+          "endTime": 790,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 830,
+          "endTime": 890,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 31,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 631,
+          "endTime": 691,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 731,
+          "endTime": 791,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 831,
+          "endTime": 891,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 32,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 632,
+          "endTime": 692,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 732,
+          "endTime": 792,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 832,
+          "endTime": 892,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 33,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 633,
+          "endTime": 693,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 733,
+          "endTime": 793,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 833,
+          "endTime": 893,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 34,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 634,
+          "endTime": 694,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 734,
+          "endTime": 794,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 834,
+          "endTime": 894,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 35,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 635,
+          "endTime": 695,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 735,
+          "endTime": 795,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 835,
+          "endTime": 895,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 36,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 636,
+          "endTime": 696,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 736,
+          "endTime": 796,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 836,
+          "endTime": 896,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 37,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 637,
+          "endTime": 697,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 737,
+          "endTime": 797,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 837,
+          "endTime": 897,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 38,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 638,
+          "endTime": 698,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 738,
+          "endTime": 798,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 838,
+          "endTime": 898,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 39,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 639,
+          "endTime": 699,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 739,
+          "endTime": 799,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 839,
+          "endTime": 899,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 40,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 640,
+          "endTime": 700,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 740,
+          "endTime": 800,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 840,
+          "endTime": 900,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 41,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 641,
+          "endTime": 701,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 741,
+          "endTime": 801,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 841,
+          "endTime": 901,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 42,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 642,
+          "endTime": 702,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 742,
+          "endTime": 802,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 842,
+          "endTime": 902,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 43,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 643,
+          "endTime": 703,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 743,
+          "endTime": 803,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 843,
+          "endTime": 903,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 44,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 644,
+          "endTime": 704,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 744,
+          "endTime": 804,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 844,
+          "endTime": 904,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 45,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 645,
+          "endTime": 705,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 745,
+          "endTime": 805,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 845,
+          "endTime": 905,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 46,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 646,
+          "endTime": 706,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 746,
+          "endTime": 806,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 846,
+          "endTime": 906,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 47,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 647,
+          "endTime": 707,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 747,
+          "endTime": 807,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 847,
+          "endTime": 907,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 48,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 648,
+          "endTime": 708,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 748,
+          "endTime": 808,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 848,
+          "endTime": 908,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 49,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 649,
+          "endTime": 709,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 749,
+          "endTime": 809,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 849,
+          "endTime": 909,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 50,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 650,
+          "endTime": 710,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 750,
+          "endTime": 810,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 850,
+          "endTime": 910,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 51,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 651,
+          "endTime": 711,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 751,
+          "endTime": 811,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 851,
+          "endTime": 911,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 52,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 652,
+          "endTime": 712,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 752,
+          "endTime": 812,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 852,
+          "endTime": 912,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 53,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 653,
+          "endTime": 713,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 753,
+          "endTime": 813,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 853,
+          "endTime": 913,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    },
+    {
+      "week": 54,
+      "sessions": [
+        {
+          "courseName": "COMP101",
+          "sessionType": "Lecture",
+          "day": "Monday",
+          "startTime": 654,
+          "endTime": 714,
+          "roomId": "R001",
+          "lecturerId": "L001",
+          "groupId": "G001"
+        },
+        {
+          "courseName": "COMP102",
+          "sessionType": "Lab",
+          "day": "Tuesday",
+          "startTime": 754,
+          "endTime": 814,
+          "roomId": "R002",
+          "lecturerId": "L002",
+          "groupId": "G002"
+        },
+        {
+          "courseName": "COMP103",
+          "sessionType": "Seminar",
+          "day": "Wednesday",
+          "startTime": 854,
+          "endTime": 914,
+          "roomId": "R003",
+          "lecturerId": "L003",
+          "groupId": "G003"
+        }
+      ]
+    }
+  ]
+}

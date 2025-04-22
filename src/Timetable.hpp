@@ -2,15 +2,18 @@
 #define TIMETABLE_HPP
 
 #include <vector>
-#include <iostream>
+#include <string>
 #include "Session.hpp"
-#include "TimeUtility.hpp"
-#include "TimeValidation.hpp"
 
+// forward‑declare the helper you use in addSession:
+void getValidTimeInput(int& start, int& end);
+std::string minutesToHHMM12(int m);
+
+// Your Timetable class
 class Timetable {
 private:
     int weekNumber;
-    std::vector<Session> sessions;  // now store Session objects directly
+    std::vector<Session> sessions;
 
 public:
     Timetable();
@@ -18,29 +21,22 @@ public:
 
     int getWeekNumber() const;
 
-    // parse a single line, validate, detect clashes, then store
+    // parse a space-delimited string, then prompt & clash-check
     void addSession(const std::string& sessionDetail);
 
-    // overload: directly append a Session
-    void addSession(const Session& s) {
-        validateTimes(s.startTime, s.endTime);
-        // clash‐detection
-        for (auto& other : sessions) {
-            bool sameDay = (other.day == s.day);
-            bool sameRoom = (other.roomId == s.roomId);
-            bool overlap = !(s.endTime <= other.startTime || other.endTime <= s.startTime);
-            if (sameDay && sameRoom && overlap) {
-                std::cerr << "⚠ warning: room clash detected\n";
-            }
-        }
-        sessions.push_back(s);
-    }
+    // same but directly from a Session
+    void addSession(const Session& s);
 
-    const std::vector<Session>& getSessions() const {
-        return sessions;
-    }
+    // if you ever need to bypass clash-check
+    void forceAddSession(const Session& s);
 
+    const std::vector<Session>& getSessions() const;
+
+    // display everything
     void displayTimetable() const;
+
+    // display only one group's sessions
+    void displayForGroup(const std::string& groupId) const;
 };
 
 #endif // TIMETABLE_HPP

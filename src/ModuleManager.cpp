@@ -62,13 +62,16 @@ void ModuleManager::listModules() const {
     }
 }
 
+// mutable version
 Module* ModuleManager::findModule(const std::string& moduleCode) {
-    // 'modules' is your private std::vector<Module>
-    auto it = std::find_if(
-        modules.begin(), modules.end(),
-        [&moduleCode](const Module& m) { return m.getModuleCode() == moduleCode; }
-    );
-    if (it != modules.end())
-        return &*it;
-    return nullptr;
+    auto it = std::find_if(modules.begin(), modules.end(),
+        [&moduleCode](const Module& m) { return m.getModuleCode() == moduleCode; });
+    return (it == modules.end() ? nullptr : &*it);
+}
+
+// const version
+const Module* ModuleManager::findModule(const std::string& moduleCode) const {
+    auto it = std::find_if(modules.begin(), modules.end(),
+        [&moduleCode](const Module& m) { return m.getModuleCode() == moduleCode; });
+    return (it == modules.end() ? nullptr : &*it);
 }
