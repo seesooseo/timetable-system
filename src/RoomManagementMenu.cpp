@@ -19,13 +19,13 @@ void roomManagementMenu(RoomManager& roomManager) {
 
         switch (choice) {
         case 1: {
-            std::string id, name;
-            std::cout << "\nEnter room ID: ";
-            std::getline(std::cin, id);
+            std::string roomID = utils::promptValidID('R', "Room");
+            std::string name;
+            std::getline(std::cin, roomID);
             std::cout << "Enter room name: ";
             std::getline(std::cin, name);
             try {
-                roomManager.addRoom(Room(id, name));
+                roomManager.addRoom(Room(roomID, name));
                 std::cout << "Room added successfully.\n";
             }
             catch (const std::exception& e) {

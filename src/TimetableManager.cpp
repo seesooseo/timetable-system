@@ -195,16 +195,40 @@ void TimetableManager::resolveConflictsInTimetable(int weekNumber) {
 
 // —— advanced unified search stub
 std::vector<std::string>
-TimetableManager::search(std::optional<int>    week,
+TimetableManager::search(std::optional<int> week,
     std::optional<std::string> module,
     std::optional<std::string> room,
     std::optional<std::string> lecturer) const
 {
-    // for brevity: just redirect to keyword if module or room give n
-    if (module) return searchTimetableByKeyword(*module);
-    if (room)   return searchTimetableByKeyword(*room);
-    return {};
+    std::vector<std::string> results;
+
+    for (const auto& t : timetables) {
+        // Filter by week if provided
+        if (week && t.getWeekNumber() != week.value())
+            continue;
+
+        for (const auto& s : t.getSessions()) {
+            if (module && s.courseName != module.value()) continue;
+            if (room && s.roomId != room.value()) continue;
+            if (lecturer && s.lecturerId != lecturer.value()) continue;
+
+            // Match found — format as string
+            std::ostringstream oss;
+            oss << "Week " << t.getWeekNumber() << ": "
+                << s.courseName << " " << s.sessionType << " "
+                << s.day << " " << minutesToHHMM12(s.startTime)
+                << " - " << minutesToHHMM12(s.endTime)
+                << "  Room: " << s.roomId
+                << "  Lecturer: " << s.lecturerId
+                << "  Group: " << s.groupId;
+
+            results.push_back(oss.str());
+        }
+    }
+
+    return results;
 }
+
 
 bool TimetableManager::isRoomAvailable(int weekNumber,
     const std::string& roomId,

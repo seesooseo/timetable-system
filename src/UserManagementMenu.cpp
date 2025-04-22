@@ -21,19 +21,18 @@ void userManagementMenu(UserManager& userManager, GroupManager& groupManager) {
 
         switch (choice) {
         case 1: {
-            std::string id, name, role;
-            std::cout << "\nEnter new user ID: ";
-            std::getline(std::cin, id);
+            std::string userID = utils::promptValidID('U', "User");
+            std::string name, role;
             std::cout << "Enter new user name: ";
             std::getline(std::cin, name);
             std::cout << "Enter user role (admin/student): ";
             std::getline(std::cin, role);
             try {
                 if (role == "admin") {
-                    userManager.addUser(std::make_unique<Admin>(id, name));
+                    userManager.addUser(std::make_unique<Admin>(userID, name));
                 }
                 else if (role == "student") {
-                    userManager.addUser(std::make_unique<Student>(id, name));
+                    userManager.addUser(std::make_unique<Student>(userID, name));
                 }
                 else {
                     std::cout << "Invalid role. Use 'admin' or 'student'.\n";

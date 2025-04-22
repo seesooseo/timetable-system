@@ -19,13 +19,12 @@ void groupManagementMenu(GroupManager& groupManager) {
 
         switch (choice) {
         case 1: {
-            std::string id, name;
-            std::cout << "\nEnter group ID: ";
-            std::getline(std::cin, id);
+            std::string groupID =utils::promptValidID('G', "Group");
+            std::string name;
             std::cout << "Enter group name: ";
             std::getline(std::cin, name);
             try {
-                groupManager.addGroup(Group(id, name));
+                groupManager.addGroup(Group(groupID, name));
                 std::cout << "Group added successfully.\n";
             }
             catch (const std::exception& e) {

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <string>
 #include <vector>
 #include <utility>
@@ -86,6 +86,27 @@ namespace utils {
             std::cout << "Invalid input. Please enter numeric minute values.\n";
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+    }
+
+    inline bool isValidID(const std::string& id, char prefix) {
+        if (id.size() != 4 || id[0] != prefix)
+            return false;
+        return std::all_of(id.begin() + 1, id.end(), ::isdigit);
+    }
+
+    inline std::string promptValidID(char prefix, const std::string& label) {
+        std::string id;
+        while (true) {
+            std::cout << "Enter " << label << " ID (e.g., " << prefix << "001): ";
+            std::cin >> id;
+
+            if (isValidID(id, prefix)) {
+                return id;
+            }
+            else {
+                std::cout << "Invalid ID format. Must start with '" << prefix << "' followed by 3 digits (e.g., " << prefix << "001).\n";
+            }
         }
     }
 }
