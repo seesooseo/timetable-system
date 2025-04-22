@@ -1,58 +1,46 @@
+﻿// TimetableManagementMenu.cpp
 #include "TimetableManagementMenu.hpp"
+#include "InputUtility.hpp"    // ← include the helper
 #include <iostream>
 #include <string>
+#include <optional>
 
 void timetableManagementMenu(TimetableManager& timetableManager) {
-    int choice = 0;
+    int choice;
     do {
-        std::cout << "\n--- Timetable Management Menu ---" << std::endl;
-        std::cout << "1. Create Timetable" << std::endl;
-        std::cout << "2. Update Timetable" << std::endl;
-        std::cout << "3. List Timetable for a Week" << std::endl;
-        std::cout << "4. Search for Conflicts" << std::endl;
-        std::cout << "5. Search Timetable by Keyword" << std::endl;
-        std::cout << "6. Export Timetable to CSV" << std::endl;
-        std::cout << "7. Resolve Conflicts" << std::endl;
-        std::cout << "0. Return to Admin Menu" << std::endl;
-        std::cout << "8. Search (filters)" << std::endl;
-        std::cout << "Enter your choice: ";
-        std::cin >> choice;
-        std::cin.ignore();
+        std::cout << "\n--- Timetable Management Menu ---\n";
+        std::cout << "1. Create Timetable\n";
+        std::cout << "2. Update Timetable\n";
+        std::cout << "3. List Timetable for a Week\n";
+        std::cout << "4. Search for Conflicts\n";
+        std::cout << "5. Search Timetable by Keyword\n";
+        std::cout << "6. Export Timetable to CSV\n";
+        std::cout << "7. Resolve Conflicts\n";
+        std::cout << "8. Search (filters)\n";
+        std::cout << "0. Return to Admin Menu\n";
+
+        // ← safely read 0–8
+        choice = utils::readIntInRange("Enter your choice", 0, 8);
 
         switch (choice) {
         case 1: {
-            int week;
-            std::cout << "\nEnter week number to create timetable: ";
-            std::cin >> week;
-            if (week < 1 || week > 53) {
-                std::cout << "Week must be between 1 and 53.\n";
-                break;
-            }
-            std::cin.ignore();
+            int week = utils::readIntInRange("\nEnter week number to create timetable", 1, 53);
             Timetable timetable(week);
-            // For simplicity, we prompt for one session; you could extend this as needed.
             std::string session;
             std::cout << "Enter session details: ";
             std::getline(std::cin, session);
             timetable.addSession(session);
             try {
                 timetableManager.createTimetable(week, timetable);
-                std::cout << "Timetable created successfully." << std::endl;
+                std::cout << "Timetable created successfully.\n";
             }
             catch (const std::exception& e) {
-                std::cout << "Error: " << e.what() << std::endl;
+                std::cout << "Error: " << e.what() << "\n";
             }
             break;
         }
         case 2: {
-            int week;
-            std::cout << "\nEnter week number to update timetable: ";
-            std::cin >> week;
-            if (week < 1 || week > 53) {
-                std::cout << "Week must be between 1 and 53.\n";
-                break;
-            }
-            std::cin.ignore();
+            int week = utils::readIntInRange("\nEnter week number to update timetable", 1, 53); 
             Timetable timetable(week);
             std::string session;
             std::cout << "Enter new session details: ";
@@ -60,34 +48,27 @@ void timetableManagementMenu(TimetableManager& timetableManager) {
             timetable.addSession(session);
             try {
                 timetableManager.updateTimetable(week, timetable);
-                std::cout << "Timetable updated successfully." << std::endl;
+                std::cout << "Timetable updated successfully.\n";
             }
             catch (const std::exception& e) {
-                std::cout << "Error: " << e.what() << std::endl;
+                std::cout << "Error: " << e.what() << "\n";
             }
             break;
         }
         case 3: {
-            int week;
-            std::cout << "\nEnter week number to list timetable: ";
-            std::cin >> week;
-            if (week < 1 || week > 53) {
-                std::cout << "Week must be between 1 and 53.\n";
-                break;
-            }
-            std::cin.ignore();
+            int week = utils::readIntInRange("\nEnter week number to list timetable", 1, 53);
             timetableManager.listTimetable(week);
             break;
         }
         case 4: {
-            std::cout << "\nSearching for timetable conflicts..." << std::endl;
+            std::cout << "\nSearching for timetable conflicts...\n";
             auto conflicts = timetableManager.searchConflicts();
             if (conflicts.empty()) {
-                std::cout << "No conflicts detected." << std::endl;
+                std::cout << "No conflicts detected.\n";
             }
             else {
-                for (const auto& conflict : conflicts) {
-                    std::cout << conflict << std::endl;
+                for (const auto& c : conflicts) {
+                    std::cout << c << "\n";
                 }
             }
             break;
@@ -98,81 +79,74 @@ void timetableManagementMenu(TimetableManager& timetableManager) {
             std::getline(std::cin, keyword);
             auto results = timetableManager.searchTimetableByKeyword(keyword);
             if (results.empty()) {
-                std::cout << "No sessions found matching the keyword." << std::endl;
+                std::cout << "No sessions found matching the keyword.\n";
             }
             else {
-                std::cout << "Sessions matching the keyword:" << std::endl;
+                std::cout << "Sessions matching the keyword:\n";
                 for (const auto& r : results) {
-                    std::cout << r << std::endl;
+                    std::cout << r << "\n";
                 }
             }
             break;
         }
         case 6: {
-            int week;
-            std::cout << "\nEnter week number to export timetable: ";
-            std::cin >> week;
-            if (week < 1 || week > 53) {
-                std::cout << "Week must be between 1 and 53.\n";
-                break;
-            }
-            std::cin.ignore();
+            int week = utils::readIntInRange("\nEnter week number to export timetable", 1, 53);
             std::string filename;
             std::cout << "Enter filename (e.g., timetable.csv): ";
             std::getline(std::cin, filename);
             try {
                 timetableManager.exportTimetableToCSV(week, filename);
-                std::cout << "Timetable exported successfully to " << filename << std::endl;
+                std::cout << "Timetable exported successfully to " << filename << "\n";
             }
             catch (const std::exception& e) {
-                std::cout << "Error exporting timetable: " << e.what() << std::endl;
+                std::cout << "Error exporting timetable: " << e.what() << "\n";
             }
             break;
         }
-              // In TimetableManagementMenu.cpp, add another case:
         case 7: {
-            int week;
-            std::cout << "\nEnter week number to resolve conflicts: ";
-            std::cin >> week;
-            if (week < 1 || week > 53) {
-                std::cout << "Week must be between 1 and 53.\n";
-                break;
-            }
-            std::cin.ignore();
+            int week = utils::readIntInRange("\nEnter week number to resolve conflicts", 1, 53);
             try {
                 timetableManager.resolveConflictsInTimetable(week);
-                std::cout << "Conflict resolution completed." << std::endl;
+                std::cout << "Conflict resolution completed.\n";
             }
             catch (const std::exception& e) {
-                std::cout << "Error: " << e.what() << std::endl;
+                std::cout << "Error: " << e.what() << "\n";
             }
             break;
         }
         case 8: {
             std::optional<int> wk; std::optional<std::string> mod, room, lec;
             std::string tmp;
-            std::cout << "Week (blank = any): "; std::getline(std::cin, tmp);
+            std::cout << "Week (blank = any): ";
+            std::getline(std::cin, tmp);
             if (!tmp.empty()) wk = std::stoi(tmp);
 
-            std::cout << "Module code (blank = any): "; std::getline(std::cin, tmp);
+            std::cout << "Module code (blank = any): ";
+            std::getline(std::cin, tmp);
             if (!tmp.empty()) mod = tmp;
 
-            std::cout << "Room ID (blank = any): "; std::getline(std::cin, tmp);
+            std::cout << "Room ID (blank = any): ";
+            std::getline(std::cin, tmp);
             if (!tmp.empty()) room = tmp;
 
-            std::cout << "Lecturer ID (blank = any): "; std::getline(std::cin, tmp);
+            std::cout << "Lecturer ID (blank = any): ";
+            std::getline(std::cin, tmp);
             if (!tmp.empty()) lec = tmp;
 
             auto res = timetableManager.search(wk, mod, room, lec);
-            if (res.empty()) std::cout << "Nothing found\n";
-            else for (auto& l : res) std::cout << l << "\n";
+            if (res.empty()) {
+                std::cout << "Nothing found\n";
+            }
+            else {
+                for (const auto& l : res) {
+                    std::cout << l << "\n";
+                }
+            }
             break;
         }
         case 0:
-            std::cout << "Returning to Admin Menu..." << std::endl;
+            std::cout << "Returning to Admin Menu...\n";
             break;
-        default:
-            std::cout << "Invalid option. Please try again." << std::endl;
         }
     } while (choice != 0);
 }

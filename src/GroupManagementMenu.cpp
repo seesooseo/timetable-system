@@ -1,19 +1,21 @@
+﻿// GroupManagementMenu.cpp
 #include "GroupManagementMenu.hpp"
+#include "InputUtility.hpp"    // ← include the helper
 #include <iostream>
 #include <string>
 
 void groupManagementMenu(GroupManager& groupManager) {
-    int choice = 0;
+    int choice;
     do {
-        std::cout << "\n--- Group Management Menu ---" << std::endl;
-        std::cout << "1. Add Group" << std::endl;
-        std::cout << "2. Update Group" << std::endl;
-        std::cout << "3. Delete Group" << std::endl;
-        std::cout << "4. List Groups" << std::endl;
-        std::cout << "0. Return to Admin Menu" << std::endl;
-        std::cout << "Enter your choice: ";
-        std::cin >> choice;
-        std::cin.ignore();
+        std::cout << "\n--- Group Management Menu ---\n";
+        std::cout << "1. Add Group\n";
+        std::cout << "2. Update Group\n";
+        std::cout << "3. Delete Group\n";
+        std::cout << "4. List Groups\n";
+        std::cout << "0. Return to Admin Menu\n";
+
+        // ← use our helper to safely read 0–4
+        choice = utils::readIntInRange("Enter your choice", 0, 4);
 
         switch (choice) {
         case 1: {
@@ -24,10 +26,10 @@ void groupManagementMenu(GroupManager& groupManager) {
             std::getline(std::cin, name);
             try {
                 groupManager.addGroup(Group(id, name));
-                std::cout << "Group added successfully." << std::endl;
+                std::cout << "Group added successfully.\n";
             }
             catch (const std::exception& e) {
-                std::cout << "Error: " << e.what() << std::endl;
+                std::cout << "Error: " << e.what() << "\n";
             }
             break;
         }
@@ -39,10 +41,10 @@ void groupManagementMenu(GroupManager& groupManager) {
             std::getline(std::cin, name);
             try {
                 groupManager.updateGroup(id, Group(id, name));
-                std::cout << "Group updated successfully." << std::endl;
+                std::cout << "Group updated successfully.\n";
             }
             catch (const std::exception& e) {
-                std::cout << "Error: " << e.what() << std::endl;
+                std::cout << "Error: " << e.what() << "\n";
             }
             break;
         }
@@ -52,23 +54,20 @@ void groupManagementMenu(GroupManager& groupManager) {
             std::getline(std::cin, id);
             try {
                 groupManager.deleteGroup(id);
-                std::cout << "Group deleted successfully." << std::endl;
+                std::cout << "Group deleted successfully.\n";
             }
             catch (const std::exception& e) {
-                std::cout << "Error: " << e.what() << std::endl;
+                std::cout << "Error: " << e.what() << "\n";
             }
             break;
         }
-        case 4: {
-            std::cout << "\nListing all groups:" << std::endl;
+        case 4:
+            std::cout << "\nListing all groups:\n";
             groupManager.listGroups();
             break;
-        }
         case 0:
-            std::cout << "Returning to Admin Menu..." << std::endl;
+            std::cout << "Returning to Admin Menu...\n";
             break;
-        default:
-            std::cout << "Invalid choice. Please try again." << std::endl;
         }
     } while (choice != 0);
 }

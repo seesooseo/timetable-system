@@ -44,6 +44,8 @@ public:
         std::optional<std::string> module,
         std::optional<std::string> room,
         std::optional<std::string> lecturer) const;
+
+    const std::vector<Timetable>& getTimetables() const { return timetables; }
 };
 
 

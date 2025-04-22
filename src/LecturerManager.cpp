@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include <stdexcept>
+#include <json.hpp>
 
 // Add
 void LecturerManager::add(std::unique_ptr<Lecturer> lec) {
@@ -34,4 +35,11 @@ Lecturer* LecturerManager::find(const std::string& id) const {
 void LecturerManager::list() const {
     for (const auto& lec : store)
         lec->displayUserInfo();
+}
+
+std::vector<Lecturer*> LecturerManager::getLecturers() const {
+    std::vector<Lecturer*> out;
+    for (auto& ptr : store)
+        out.push_back(ptr.get());
+    return out;
 }

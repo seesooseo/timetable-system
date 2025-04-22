@@ -19,6 +19,7 @@ public:
     void updateGroup(const std::string& groupId, const Group& updatedGroup);
     void deleteGroup(const std::string& groupId);
     void listGroups() const;
+    const std::vector<Group>& getGroups() const { return groups; }
 };
 
 #endif // GROUPMANAGER_HPP

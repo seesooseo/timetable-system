@@ -8,6 +8,7 @@
 #include <stdexcept>       // For std::runtime_error
 #include <iostream>
 #include <string>
+#include <Admin.hpp>
 
 class Student;
 
@@ -23,6 +24,9 @@ public:
     Student* findStudent(const std::string& id) const;
     void assignStudentToGroup(const std::string& studentId,
         const std::string& groupId);
+    std::vector<Admin*>   getAdmins()  const;
+    std::vector<Student*> getStudents() const;
+
 };
 
 

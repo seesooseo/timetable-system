@@ -23,7 +23,8 @@ public:
 
     // Lists all lecturers to stdout
     void list() const;
+
+    std::vector<Lecturer*> getLecturers() const;
 };
 
 #endif // LECTURERMANAGER_HPP
-

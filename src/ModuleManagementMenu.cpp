@@ -1,19 +1,20 @@
-// ModuleManagementMenu.cpp
+﻿// ModuleManagementMenu.cpp
 #include "ModuleManagementMenu.hpp"
+#include "InputUtility.hpp"    // << include the helper
 
 void moduleManagementMenu(ModuleManager& moduleManager) {
-    int choice = 0;
+    int choice;
     do {
-        std::cout << "\n--- Module Management Menu ---" << std::endl;
-        std::cout << "1. Add Module" << std::endl;
-        std::cout << "2. Update Module" << std::endl;
-        std::cout << "3. Delete Module" << std::endl;
-        std::cout << "4. Search Module" << std::endl;
-        std::cout << "5. List Modules" << std::endl;
-        std::cout << "0. Return to Admin Menu" << std::endl;
-        std::cout << "Enter your choice: ";
-        std::cin >> choice;
-        std::cin.ignore(); // Clear newline
+        std::cout << "\n--- Module Management Menu ---\n";
+        std::cout << "1. Add Module\n";
+        std::cout << "2. Update Module\n";
+        std::cout << "3. Delete Module\n";
+        std::cout << "4. Search Module\n";
+        std::cout << "5. List Modules\n";
+        std::cout << "0. Return to Admin Menu\n";
+
+        // ← replace raw cin with our helper to guard non‑numeric & out‑of‑range
+        choice = utils::readIntInRange("Enter your choice", 0, 5);
 
         switch (choice) {
         case 1: {
@@ -26,10 +27,10 @@ void moduleManagementMenu(ModuleManager& moduleManager) {
             std::getline(std::cin, desc);
             try {
                 moduleManager.addModule(Module(code, name, desc));
-                std::cout << "Module added successfully." << std::endl;
+                std::cout << "Module added successfully.\n";
             }
             catch (const std::exception& e) {
-                std::cout << "Error: " << e.what() << std::endl;
+                std::cout << "Error: " << e.what() << "\n";
             }
             break;
         }
@@ -43,10 +44,10 @@ void moduleManagementMenu(ModuleManager& moduleManager) {
             std::getline(std::cin, desc);
             try {
                 moduleManager.updateModule(code, Module(code, name, desc));
-                std::cout << "Module updated successfully." << std::endl;
+                std::cout << "Module updated successfully.\n";
             }
             catch (const std::exception& e) {
-                std::cout << "Error: " << e.what() << std::endl;
+                std::cout << "Error: " << e.what() << "\n";
             }
             break;
         }
@@ -56,10 +57,10 @@ void moduleManagementMenu(ModuleManager& moduleManager) {
             std::getline(std::cin, code);
             try {
                 moduleManager.deleteModule(code);
-                std::cout << "Module deleted successfully." << std::endl;
+                std::cout << "Module deleted successfully.\n";
             }
             catch (const std::exception& e) {
-                std::cout << "Error: " << e.what() << std::endl;
+                std::cout << "Error: " << e.what() << "\n";
             }
             break;
         }
@@ -69,24 +70,21 @@ void moduleManagementMenu(ModuleManager& moduleManager) {
             std::getline(std::cin, code);
             try {
                 Module mod = moduleManager.searchModule(code);
-                std::cout << "Module found:" << std::endl;
+                std::cout << "Module found:\n";
                 mod.displayModule();
             }
             catch (const std::exception& e) {
-                std::cout << "Error: " << e.what() << std::endl;
+                std::cout << "Error: " << e.what() << "\n";
             }
             break;
         }
-        case 5: {
-            std::cout << "\nListing all modules:" << std::endl;
+        case 5:
+            std::cout << "\nListing all modules:\n";
             moduleManager.listModules();
             break;
-        }
         case 0:
-            std::cout << "Returning to Admin Menu..." << std::endl;
+            std::cout << "Returning to Admin Menu...\n";
             break;
-        default:
-            std::cout << "Invalid option. Please try again." << std::endl;
         }
     } while (choice != 0);
 }

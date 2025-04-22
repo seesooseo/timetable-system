@@ -13,7 +13,7 @@ class AuthManager {
 private:
     UserManager& userManager; // Reference to the UserManager instance.
 public:
-    AuthManager(UserManager& um);
+    explicit AuthManager(UserManager& um);
     // Login function only declared here.
     User* loginUser(const std::string& userId);
 };

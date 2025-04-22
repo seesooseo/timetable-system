@@ -1,12 +1,6 @@
 ﻿#include "Timetable.hpp"
-#include "TimeUtility.hpp"
-#include "Session.hpp"
-#include <iostream>
 #include <sstream>
-#include "TimeValidation.hpp"    // for validateTimes()
-#include "Session.hpp"           // for parseSession()
 #include <stdexcept>
-#include <algorithm>
 
 Timetable::Timetable() : weekNumber(0) {}
 
@@ -16,50 +10,44 @@ int Timetable::getWeekNumber() const {
     return weekNumber;
 }
 
-void Timetable::addSession(const std::string& sessionStr) {
-    // 1) Parse into fields
-    Session s = parseSession(sessionStr);
+void Timetable::addSession(const std::string& sessionDetail) {
+    // 1) parse into a Session
+    Session s = parseSession(sessionDetail);
 
-    // 2) Validate that start < end and within 0–1439
+    // 2) validate time range
     validateTimes(s.startTime, s.endTime);
 
-    // 3) Check existing sessions for a room/day clash
-    for (const auto& existing : sessions) {
-        Session other = parseSession(existing);
+    // 3) check for clashes
+    for (const auto& other : sessions) {
         bool sameDay = (other.day == s.day);
         bool sameRoom = (other.roomId == s.roomId);
         bool overlap = !(s.endTime <= other.startTime || other.endTime <= s.startTime);
         if (sameDay && sameRoom && overlap) {
             std::cerr << "⚠ warning: room clash detected\n";
-            // DO NOT throw – just record it
+            // but continue—don't throw
         }
     }
 
-    // 4) If all good, store it
-    sessions.push_back(sessionStr);
+    // 4) store it
+    sessions.push_back(s);
 }
 
 void Timetable::displayTimetable() const {
-    std::cout << "Timetable for week " << weekNumber << ":" << std::endl;
+    std::cout << "Timetable for week " << weekNumber << ":\n";
     if (sessions.empty()) {
-        std::cout << "No sessions scheduled." << std::endl;
+        std::cout << "  (no sessions scheduled)\n";
     }
     else {
-        for (const auto& sessionStr : sessions) {
-            // Use the parseSession helper to extract structured data.
-            Session s = parseSession(sessionStr);
-            // Reformat start and end times using the utility function.
-            std::string startFormatted = minutesToHHMM12(s.startTime);
-            std::string endFormatted = minutesToHHMM12(s.endTime);
-            std::cout << s.courseName << " " << s.sessionType
+        for (const auto& s : sessions) {
+            std::string start = minutesToHHMM12(s.startTime);
+            std::string end = minutesToHHMM12(s.endTime);
+            std::cout
+                << "  " << s.courseName << " " << s.sessionType
                 << " on " << s.day
-                << " from " << startFormatted
-                << " to " << endFormatted
-                << " in room " << s.roomId << std::endl;
+                << " from " << start
+                << " to " << end
+                << " in room " << s.roomId
+                << "\n";
         }
     }
-}
-
-const std::vector<std::string>& Timetable::getSessions() const {
-    return sessions;
 }

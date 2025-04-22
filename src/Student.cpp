@@ -20,4 +20,5 @@ void Student::displayUserInfo() const {
     std::cout << "Student User Information:" << std::endl;
     std::cout << "User ID: " << getUserID() << std::endl;
     std::cout << "Name: " << getName() << std::endl;
+    std::cout << "Group: " << getGroup() << std::endl;
 }

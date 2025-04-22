@@ -1,27 +1,65 @@
-// LecturerManagementMenu.cpp
-#include "LecturerManagementMenu.hpp"
-#include <iostream>
-#include <string>
+﻿// src/LectureManagementMenu.cpp
+#include "LectureManagementMenu.hpp"
+#include "LecturerManager.hpp"
+#include <limits>
 
-void lecturerManagementMenu(LecturerManager& lm) {
-    int c{};
+LectureManagementMenu::LectureManagementMenu(ModuleManager& mMgr,
+    LecturerManager& lMgr,
+    RoomManager& rMgr,
+    SessionTypeManager& sMgr,
+    std::istream& in,
+    std::ostream& out)
+    : moduleManager_(mMgr)
+    , lecturerManager_(lMgr)
+    , roomManager_(rMgr)
+    , sessionTypeManager_(sMgr)
+    , in_(in)
+    , out_(out)
+{
+    // any additional setup…
+}
+
+void LectureManagementMenu::run() {
+    int choice = -1;
     do {
-        std::cout << "\n--- Lecturer Menu ---\n"
-            << "1 Add  2 Remove  3 List  0 Back\n> ";
-        std::cin >> c; std::cin.ignore();
-        try {
-            if (c == 1) {
-                std::string id, name;
-                std::cout << "ID: "; std::getline(std::cin, id);
-                std::cout << "Name: "; std::getline(std::cin, name);
-                lm.add(std::make_unique<Lecturer>(id, name));
-            }
-            else if (c == 2) {
-                std::string id; std::cout << "ID: "; std::getline(std::cin, id);
-                lm.remove(id);
-            }
-            else if (c == 3) lm.list();
+        out_ << "\n====== Lecture Management ======\n"
+            << "1) Add Lecture\n"
+            << "2) Edit Lecture\n"
+            << "3) Delete Lecture\n"
+            << "4) List All Lectures\n"
+            << "0) Back to Main Menu\n"
+            << "Choice> ";
+
+        if (!(in_ >> choice)) {
+            // handle non‑integer input
+            in_.clear();
+            in_.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            out_ << "Invalid input; please enter a number.\n";
+            continue;
         }
-        catch (std::exception& e) { std::cout << e.what() << '\n'; }
-    } while (c);
+
+        switch (choice) {
+        case 1:
+            // TODO: moduleManager_.addLecture(...);
+            out_ << "[Add Lecture not implemented]\n";
+            break;
+        case 2:
+            // TODO: moduleManager_.editLecture(...);
+            out_ << "[Edit Lecture not implemented]\n";
+            break;
+        case 3:
+            // TODO: moduleManager_.deleteLecture(...);
+            out_ << "[Delete Lecture not implemented]\n";
+            break;
+        case 4:
+            // TODO: moduleManager_.listLectures();
+            out_ << "[List Lectures not implemented]\n";
+            break;
+        case 0:
+            // just exit
+            break;
+        default:
+            out_ << "Invalid choice; please select one of the menu options.\n";
+        }
+    } while (choice != 0);
 }

@@ -2,6 +2,7 @@
 #define USER_H
 
 #include <string>
+#include <string>
 
 /*
  * Abstract Class: User
@@ -26,13 +27,13 @@ public:
     virtual ~User();
 
     // Getter for user ID.
-    std::string getUserID() const;
+    const std::string& getUserID() const;
 
     // Setter for user ID.
     void setUserID(const std::string &id);
     
     // Getter for user name.
-    std::string getName() const;
+    const std::string& getName() const;
 
     // Setter for user name.
     void setName(const std::string &name);

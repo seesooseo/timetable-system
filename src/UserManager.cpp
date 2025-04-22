@@ -2,6 +2,7 @@
 #include <Student.hpp>
 #include <algorithm>
 #include<stdexcept>
+#include <Admin.hpp>
 
 UserManager::UserManager() : users() {}
 
@@ -51,15 +52,32 @@ void UserManager::listUsers() const {
         std::cout << "-----------------" << std::endl;
     }
 }
+std::vector<Admin*> UserManager::getAdmins() const {
+    std::vector<Admin*> admins;
+    for (auto& u : users) {
+        if (auto a = dynamic_cast<Admin*>(u.get()))
+            admins.push_back(a);
+    }
+    return admins;
+}
+
+std::vector<Student*> UserManager::getStudents() const {
+    std::vector<Student*> students;
+    for (auto& u : users) {
+        if (auto s = dynamic_cast<Student*>(u.get()))
+            students.push_back(s);
+    }
+    return students;
+}
 
 Student* UserManager::findStudent(const std::string& id) const {
     User* u = findUserById(id);
     return dynamic_cast<Student*>(u);
 }
 
-void UserManager::assignStudentToGroup(const std::string& sid,
-    const std::string& gid) {
-    Student* s = findStudent(sid);
+void UserManager::assignStudentToGroup(const std::string& studentId,
+    const std::string& groupId) {
+    Student* s = findStudent(studentId);
     if (!s) throw std::runtime_error("Student not found");
-    s->setGroup(gid);
+    s->setGroup(groupId);
 }

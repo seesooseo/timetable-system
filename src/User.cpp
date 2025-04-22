@@ -14,7 +14,7 @@ User::~User() {
 }
 
 // Return the user's ID.
-std::string User::getUserID() const {
+const std::string& User::getUserID() const {
     return userID;
 }
 
@@ -24,7 +24,7 @@ void User::setUserID(const std::string &id) {
 }
 
 // Return the user's name.
-std::string User::getName() const {
+const std::string& User::getName() const {
     return name;
 }
 

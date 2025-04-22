@@ -21,7 +21,7 @@ public:
     Admin(const std::string &id, const std::string &name);
 
     // Destructor
-    virtual ~Admin();
+    ~Admin() override;
 
     // Override the pure virtual function to display admin information.
     virtual void displayUserInfo() const override;

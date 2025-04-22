@@ -19,6 +19,7 @@ public:
     void updateSessionType(const std::string& typeId, const SessionType& updatedSessionType);
     void deleteSessionType(const std::string& typeId);
     void listSessionTypes() const;
+    const std::vector<SessionType>& getSessionTypes() const { return sessionTypes; }
 };
 
 #endif // SESSIONTYPEMANAGER_HPP

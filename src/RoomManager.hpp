@@ -19,6 +19,7 @@ public:
     void updateRoom(const std::string& roomId, const Room& updatedRoom);
     void deleteRoom(const std::string& roomId);
     void listRooms() const;
+    const std::vector<Room>& getRooms() const { return rooms; }
 };
 
 #endif // ROOMMANAGER_HPP

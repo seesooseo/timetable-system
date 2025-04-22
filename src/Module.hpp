@@ -35,19 +35,19 @@ public:
     ~Module();
 
     // Getter for moduleCode.
-    std::string getModuleCode() const;
+   const std::string& getModuleCode() const;
 
     // Setter for moduleCode.
     void setModuleCode(const std::string &code);
     
     // Getter for moduleName.
-    std::string getModuleName() const;
+    const std::string& getModuleName() const;
 
     // Setter for moduleName.
     void setModuleName(const std::string &name);
     
     // Getter for description.
-    std::string getDescription() const;
+    const std::string& getDescription() const;
 
     // Setter for description.
     void setDescription(const std::string &desc);

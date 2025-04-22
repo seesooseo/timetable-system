@@ -14,8 +14,8 @@ public:
     Group(const std::string& id, const std::string& name) : groupId(id), groupName(name) {}
 
     // Getters
-    std::string getGroupId() const { return groupId; }
-    std::string getGroupName() const { return groupName; }
+    const std::string& getGroupId() const { return groupId; }
+    const std::string& getGroupName() const { return groupName; }
 
     // Display method for group details
     void displayGroup() const {

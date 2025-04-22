@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <memory>
 
 // Include all manager classes and user/entity classes.
@@ -21,8 +21,10 @@
 #include "SessionTypeManagementMenu.hpp"
 #include "RoomManagementMenu.hpp"
 #include "TimetableManagementMenu.hpp"
-#include <LecturerManagementMenu.hpp>
-#include <LecturerManager.hpp>
+#include "LectureManagementMenu.hpp"
+#include "LecturerManager.hpp"
+#include <InputUtility.hpp>
+#include <Persistence.hpp>
 
 
 // Forward declarations for menus and login.
@@ -33,7 +35,7 @@ void adminExtendedMenu(
     SessionTypeManager& sessionTypeManager,
     RoomManager& roomManager,
     TimetableManager& timetableManager,
-    LecturerManager& lecturerManager
+    LecturerManager& lectureManager
 );
 void studentMenu(ModuleManager& moduleManager, UserManager& userManager);
 
@@ -90,14 +92,46 @@ void populateDefaultData(
 }
 
 int main() {
-    // Instantiate manager objects once.
-    ModuleManager moduleManager;
-    UserManager userManager;
-    GroupManager groupManager;
-    SessionTypeManager sessionTypeManager;
-    RoomManager roomManager;
-    TimetableManager timetableManager;
-    LecturerManager lecturerManager;
+
+    // containers for persistence
+    std::vector<Module>         modules;
+    std::vector<Room>           rooms;
+    std::vector<SessionType>    sessionTypes;
+    std::vector<Group>          groups;
+    std::vector<std::unique_ptr<Admin>>    admins;
+    std::vector<std::unique_ptr<Student>>  students;
+    std::vector<std::unique_ptr<Lecturer>> lecturers;
+    std::vector<Timetable>      timetables;
+
+
+    // now initialize managers using loaded data
+    ModuleManager        moduleManager;
+    RoomManager          roomManager;
+    SessionTypeManager   sessionTypeManager;
+    GroupManager         groupManager;
+    UserManager          userManager;
+    LecturerManager      lecturerManager;
+    TimetableManager     timetableManager;
+
+    Persistence::loadAll("data.json",
+        moduleManager,  // add getters for all lists if needed
+        roomManager,
+        sessionTypeManager,
+        groupManager,
+        userManager,
+        lecturerManager,
+        timetableManager);
+    return 0;
+
+    for (auto& m : modules)        moduleManager.addModule(m);
+    for (auto& r : rooms)          roomManager.addRoom(r);
+    for (auto& s : sessionTypes)   sessionTypeManager.addSessionType(s);
+    for (auto& g : groups)         groupManager.addGroup(g);
+    for (auto& a : admins)         userManager.addUser(std::move(a));
+    for (auto& s : students)       userManager.addUser(std::move(s));
+    for (auto& l : lecturers)      lecturerManager.add(std::move(l));
+    for (auto& tt : timetables)     timetableManager.createTimetable(tt.getWeekNumber(), tt);
+
 
     // Populate default data into the system.
     populateDefaultData(userManager, moduleManager, groupManager,
@@ -107,47 +141,51 @@ int main() {
 
     // Main menu loop for login.
     while (true) {
-        std::cout << "\n=== NTU Timetabling System ===" << std::endl;
-        std::cout << "1. Login" << std::endl;
-        std::cout << "0. Exit" << std::endl;
-        std::cout << "Enter your choice: ";
+        std::cout << "\n=== NTU Timetabling System ===\n";
+        std::cout << "1. Login\n";
+        std::cout << "0. Exit\n";
 
-        int mainChoice;
-        std::cin >> mainChoice;
-        std::cin.ignore();
+        // ← replaces raw std::cin >> mainChoice
+        int mainChoice = utils::readIntInRange("Enter your choice", 0, 1);
 
         if (mainChoice == 0) {
-            std::cout << "Exiting system. Goodbye!" << std::endl;
+            std::cout << "Exiting system. Goodbye!\n";
             break;
         }
         else if (mainChoice == 1) {
             std::cout << "\n=== Login ===\nEnter User ID: ";
-            // Use AuthManager's login function; for simplicity here, using a simple loginUser.
             std::string userId;
-            std::cin >> userId;
-            std::cin.ignore();
+            std::getline(std::cin, userId);
+            // (Optionally, you could add a simple non‑empty check here)
             User* currentUser = authManager.loginUser(userId);
             if (currentUser) {
-                // Direct user to the appropriate menu based on their role.
-                if (dynamic_cast<Admin*>(currentUser) != nullptr) {
+                if (dynamic_cast<Admin*>(currentUser)) {
                     adminExtendedMenu(moduleManager, userManager, groupManager,
-                        sessionTypeManager, roomManager, timetableManager, lecturerManager);
+                        sessionTypeManager, roomManager, timetableManager,
+                        lecturerManager);
                 }
-                else if (dynamic_cast<Student*>(currentUser) != nullptr) {
+                else if (dynamic_cast<Student*>(currentUser)) {
                     studentMenu(moduleManager, userManager);
                 }
             }
         }
         else {
-            std::cout << "Invalid choice. Please try again." << std::endl;
+            // This case will never trigger, since readIntInRange enforces 0–1
         }
     }
-
+    Persistence::saveAll("data.json",
+        moduleManager,  // add getters for all lists if needed
+        roomManager,
+        sessionTypeManager,
+        groupManager,
+        userManager,
+        lecturerManager,
+        timetableManager);
     return 0;
 }
 
 // A simple login function that searches for a user by user ID.
-User* loginUser(UserManager& userManager) {
+User* loginUser( UserManager& userManager) {
     std::string userId;
     std::cin >> userId;
     std::cin.ignore();
@@ -236,9 +274,20 @@ void adminExtendedMenu(
             timetableManagementMenu(timetableManager);
             break;
         }
-        case 7:
-            lecturerManagementMenu(lecturerManager);
-            break;
+        case 7: {
+              LectureManagementMenu lectureMenu(
+                  moduleManager,
+                  lecturerManager,
+                  roomManager,
+                  sessionTypeManager,
+                  std::cin,
+                  std::cout
+              );
+
+              // now actually launch it (use your real member function name here)
+              lectureMenu.run();           // or menu.showMenu(); or menu.display(); etc.
+              break;
+            };
         case 0:
             std::cout << "Returning to Main Menu..." << std::endl;
             break;
@@ -247,4 +296,6 @@ void adminExtendedMenu(
             break;
         }
     } while (choice != 0);
+
 }
+

@@ -12,8 +12,8 @@ public:
     SessionType() : typeId(""), typeName("") {}
     SessionType(const std::string& id, const std::string& name) : typeId(id), typeName(name) {}
 
-    std::string getTypeId() const { return typeId; }
-    std::string getTypeName() const { return typeName; }
+    const std::string& getTypeId() const { return typeId; }
+    const std::string& getTypeName() const { return typeName; }
 
     void displaySessionType() const {
         std::cout << "Session Type ID: " << typeId << "\nSession Type: " << typeName << std::endl;

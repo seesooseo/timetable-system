@@ -1,4 +1,4 @@
-#include "Module.hpp"
+﻿#include "Module.hpp"
 
 // Default constructor initializes an empty module.
 Module::Module() : moduleCode(""), moduleName(""), description("") {
@@ -10,15 +10,19 @@ Module::Module(const std::string &code, const std::string &name, const std::stri
 }
 
 // Copy constructor creates a new module as a copy of an existing one.
-Module::Module(const Module &other)
-    : moduleCode(other.moduleCode), moduleName(other.moduleName), description(other.description) {
+Module::Module(const Module& other)
+    : moduleCode(other.moduleCode)
+    , moduleName(other.moduleName)
+    , description(other.description)
+    , lecturerIds(other.lecturerIds)    // ← copy this too
+{
 }
 
 // Destructor; no dynamic memory, so no special cleanup is required.
 Module::~Module() {}
 
 // Get the module's unique code.
-std::string Module::getModuleCode() const {
+const std::string& Module::getModuleCode() const {
     return moduleCode;
 }
 
@@ -28,7 +32,7 @@ void Module::setModuleCode(const std::string &code) {
 }
 
 // Get the module's name.
-std::string Module::getModuleName() const {
+const std::string& Module::getModuleName() const {
     return moduleName;
 }
 
@@ -38,7 +42,7 @@ void Module::setModuleName(const std::string &name) {
 }
 
 // Get the description of the module.
-std::string Module::getDescription() const {
+const std::string& Module::getDescription() const {
     return description;
 }
 

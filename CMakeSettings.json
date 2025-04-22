@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "name": "Coverage-Clang",
+            "generator": "Ninja",
+            "configurationType": "Debug",
+            "buildRoot": "${projectDir}/out/build/${name}",
+            "installRoot": "${projectDir}/out/install/${name}",
+            "variables": [
+                {
+                    "name": "CMAKE_C_COMPILER",
+                    "value": "C:/Program Files/LLVM/bin/clang-cl.exe"
+                },
+                {
+                    "name": "CMAKE_CXX_COMPILER",
+                    "value": "C:/Program Files/LLVM/bin/clang-cl.exe"
+                },
+                {
+                    "name": "ENABLE_COVERAGE",
+                    "value": "ON"
+                }
+            ]
+        }
+    ]
+}

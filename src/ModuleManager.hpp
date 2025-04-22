@@ -18,7 +18,8 @@ public:
     void deleteModule(const std::string& moduleCode);
     Module searchModule(const std::string& moduleCode) const;
     void listModules() const;
-    Module * findModule(const std::string & code);
+    Module * findModule(const std::string & moduleCode);
+    const std::vector<Module>& getModules() const { return modules; }
 };
 
 #endif // MODULEMANAGER_HPP
