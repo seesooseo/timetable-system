@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-#include "InputUtility.hpp" 
+
 
 // Function to validate session times
 void getValidSessionTimes(const int& start, const int& end) {
@@ -25,6 +25,7 @@ bool isValidTimeInput(const std::string& input) {
 
 // Function to get valid start and end time inputs
 void getValidTimeInput(int& start, int& end) {
+    std::cout << "[DEBUG] getValidTimeInput CALLED!\n";
     std::string input;
     bool valid = false;
 

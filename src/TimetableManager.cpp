@@ -182,7 +182,7 @@ void TimetableManager::resolveConflictsInTimetable(int weekNumber) {
         Timetable clean(weekNumber);
         for (size_t i = 0; i < raw.size(); ++i) {
             if (toRemove.count(i) == 0) {
-                clean.addSession(raw[i]);   // calls your addSession(const Session&)
+                clean.forceAddSession(raw[i]);   // calls your addSession(const Session&)
             }
         }
 

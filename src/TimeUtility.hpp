@@ -12,9 +12,9 @@ inline std::string minutesToHHMM12(int minutes) {
     bool pm = (h >= 12);
     int disp = h % 12; if (!disp) disp = 12;
     std::ostringstream os;
-    os << disp << ':'
+    os << std::setw(2) << std::setfill('0') << disp << ':'
         << std::setw(2) << std::setfill('0') << m
-        << (pm ? "PM" : "AM");
+        << ' ' << (pm ? "PM" : "AM");
     return os.str();
 }
 
